@@ -1,0 +1,49 @@
+========================================================================
+Function definition
+========================================================================
+
+private function f:long(p1, p2:long, p3):1 {
+    return 0
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    return_type: (type)
+    parameter: (parameter
+      name: (identifier))
+    parameter: (parameter
+      name: (identifier)
+      type: (type))
+    parameter: (parameter
+      name: (identifier))
+    priority: (literal (number))
+    body: (statement_block
+      (return_statement
+        value: (literal (number))))))
+
+========================================================================
+Function call expression and string escape sequences
+========================================================================
+
+probe end {
+    printf("stack: %p, frame: %p\n", sp, fp)
+}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block
+      (expression_statement
+        (call_expression
+          function: (identifier)
+          argument: (literal
+            (string
+              (escape_sequence)))
+          argument: (identifier)
+          argument: (identifier))))))

@@ -1,0 +1,23 @@
+========================================================================
+Variable declarations
+========================================================================
+
+global n1, n2 = 01, n3 = 1, n4 = 0x1, n5 = $1
+private s1 = "string", s2 = @2
+private global a%[65535];
+
+---
+
+(program
+  (variable_declaration
+    name: (identifier)
+    name: (identifier) value: (literal (number))
+    name: (identifier) value: (literal (number))
+    name: (identifier) value: (literal (number))
+    name: (identifier) value: (literal (script_argument)))
+  (variable_declaration
+    name: (identifier) value: (literal (string))
+    name: (identifier) value: (literal (script_argument)))
+  (variable_declaration
+    name: (identifier)
+    size: (literal (number))))

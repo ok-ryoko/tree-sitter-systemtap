@@ -1,0 +1,20 @@
+========================================================================
+Block comments and concatenated strings
+========================================================================
+
+global s = /* comment */ "string" /** comment
+comment **/ "/* \"string\" */"
+
+---
+
+(program
+  (variable_declaration
+    name: (identifier)
+    (comment)
+    value: (literal
+      (concatenated_string
+        (string)
+        (comment)
+        (string
+          (escape_sequence)
+          (escape_sequence))))))

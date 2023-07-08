@@ -1,0 +1,144 @@
+========================================================================
+Probe point definition
+========================================================================
+
+probe p {}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block)))
+
+========================================================================
+Probe point definition with many components
+========================================================================
+
+probe p.q(0).*.s.t("parameter").u {}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component)
+      component: (probe_point_component
+        parameter: (literal (number)))
+      component: (probe_point_component)
+      component: (probe_point_component)
+      component: (probe_point_component
+        parameter: (literal (string)))
+      component: (probe_point_component))
+    body: (statement_block)))
+
+========================================================================
+Probe point definition with a conditional handler
+========================================================================
+
+probe p {
+    if (filter()) next
+    a[tid()] <<< $v
+}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block
+      (if_statement
+        condition: (call_expression
+          function: (identifier))
+        consequence: (next_statement))
+      (expression_statement
+        (assignment_expression
+          left: (subscript_expression
+            argument: (identifier)
+            (tuple_index
+              index: (call_expression
+                function: (identifier))))
+          right: (identifier))))))
+
+========================================================================
+Probe point definition with many probe points and arming conditions
+========================================================================
+
+probe p, q.r(0) if (s), t.u("parameter").*.v ?, w ! if (x) {}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component))
+    probe_point: (probe_point
+      component: (probe_point_component)
+      component: (probe_point_component
+        parameter: (literal (number)))
+      arming_condition: (identifier))
+    probe_point: (probe_point
+      component: (probe_point_component)
+      component: (probe_point_component
+        parameter: (literal (string)))
+      component: (probe_point_component)
+      component: (probe_point_component))
+    probe_point: (probe_point
+      component: (probe_point_component)
+      arming_condition: (identifier))
+    body: (statement_block)))
+
+========================================================================
+Probe point definition with component expansion
+========================================================================
+
+probe p.{q, {r, s}}.t ? {}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component)
+      component: (probe_point_expansion
+        (probe_point_component)
+        (probe_point_expansion
+          (probe_point_component)
+          (probe_point_component)))
+      component: (probe_point_component))
+    body: (statement_block)))
+
+========================================================================
+Probe point alias, prologue-style
+========================================================================
+
+probe p = q {}, {}
+
+---
+
+(program
+  (probe_point_alias_prologue
+    alias: (probe_point
+      component: (probe_point_component))
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block)
+    epilogue: (statement_block)))
+
+========================================================================
+Probe point alias, epilogue-style
+========================================================================
+
+probe p += q {}
+
+---
+
+(program
+  (probe_point_alias_epilogue
+    alias: (probe_point
+      component: (probe_point_component))
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block)))

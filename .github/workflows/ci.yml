@@ -1,0 +1,40 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  main:
+    runs-on:
+      - macos-12
+      - ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install module
+        run: npm install
+
+      - name: Check formatting of JavaScript and JSON files
+        run: npm run fmt-check
+
+      - name: Lint all JavaScript files
+        run: npm run lint
+
+      - name: Test module
+        run: npm test

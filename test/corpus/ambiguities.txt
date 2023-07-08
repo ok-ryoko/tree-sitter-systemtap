@@ -1,0 +1,61 @@
+========================================================================
+Sequential unary expression statements 1
+========================================================================
+
+function f() {
+    p++
+    q--
+    ++r
+    --s
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (expression_statement
+        (update_expression
+          argument: (update_expression
+            argument: (identifier))))
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (expression_statement
+        (identifier)))))
+
+========================================================================
+Sequential unary expression statements 2
+========================================================================
+
+function f() {
+    &p
+    !q
+    +r
+    -s
+    ~t
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (expression_statement
+        (unary_expression
+          argument: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (binary_expression
+            left: (unary_expression
+              argument: (identifier))
+            right: (identifier))
+          right: (identifier)))
+      (expression_statement
+        (unary_expression
+          argument: (identifier))))))

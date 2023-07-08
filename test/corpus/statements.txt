@@ -1,0 +1,205 @@
+========================================================================
+If statement
+========================================================================
+
+function f() {
+    if (p) {} else if (q) ; else {}
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (if_statement
+        condition: (identifier)
+        consequence: (statement_block)
+        alternative: (if_statement
+          condition: (identifier)
+          consequence: (null_statement)
+          alternative: (statement_block))))))
+
+========================================================================
+While loop with break statement
+========================================================================
+
+function f() {
+    while (p) break
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (while_statement
+        condition: (identifier)
+        body: (break_statement)))))
+
+========================================================================
+For loops with continue and null statements
+========================================================================
+
+function f() {
+    for (;;) ;
+    for (i = 0;;) {}
+    for (; i < 1024;) continue
+    for (;; i++) ;
+    for (i = 0; i < 1024;) {}
+    for (; i < 1024; i++) continue
+    for (i = 0;; i++) ;
+    for (i = 0; i < 1024; i++) {}
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (for_statement
+        body: (null_statement))
+      (for_statement
+        initialization: (expression_statement
+          (assignment_expression
+            left: (identifier)
+            right: (literal (number))))
+        body: (statement_block))
+      (for_statement
+        condition: (expression_statement
+          (binary_expression
+            left: (identifier)
+            right: (literal (number))))
+        body: (continue_statement))
+      (for_statement
+        iteration: (expression_statement
+          (update_expression
+            argument: (identifier)))
+        body: (null_statement))
+      (for_statement
+        initialization: (expression_statement
+          (assignment_expression
+            left: (identifier)
+            right: (literal (number))))
+        condition: (expression_statement
+          (binary_expression
+            left: (identifier)
+            right: (literal (number))))
+        body: (statement_block))
+      (for_statement
+        condition: (expression_statement
+          (binary_expression
+            left: (identifier)
+            right: (literal (number))))
+        iteration: (expression_statement
+          (update_expression
+            argument: (identifier)))
+        body: (continue_statement))
+      (for_statement
+        initialization: (expression_statement
+          (assignment_expression
+            left: (identifier)
+            right: (literal (number))))
+        iteration: (expression_statement
+          (update_expression
+            argument: (identifier)))
+        body: (null_statement))
+      (for_statement
+        initialization: (expression_statement
+          (assignment_expression
+            left: (identifier)
+            right: (literal (number))))
+        condition: (expression_statement
+          (binary_expression
+            left: (identifier)
+            right: (literal (number))))
+        iteration: (expression_statement
+          (update_expression
+            argument: (identifier)))
+        body: (statement_block)))))
+
+========================================================================
+Foreach loops with continue, delete and null statements
+========================================================================
+
+probe end {
+    foreach (k in a) ;
+    foreach (v = k in a) {}
+    foreach (v = k in a[p, *]) continue
+    foreach ([i, j] in a[p, *]) ;
+    foreach (k = [i, j] in a) {}
+    foreach (k = [i, j] in a[p, *] @count+ limit 1024) continue
+}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block
+      (foreach_statement
+        left: (identifier)
+        right: (identifier)
+        body: (null_statement))
+      (foreach_statement
+        left: (identifier)
+        left: (identifier)
+        right: (identifier)
+        body: (statement_block))
+      (foreach_statement
+        left: (identifier)
+        left: (identifier)
+        right: (identifier)
+        right: (tuple_index
+          index: (identifier))
+        body: (continue_statement))
+      (foreach_statement
+        left: (tuple_index
+          index: (identifier)
+          index: (identifier))
+        right: (identifier)
+        right: (tuple_index
+          index: (identifier))
+        body: (null_statement))
+      (foreach_statement
+        left: (identifier)
+        left: (tuple_index
+          index: (identifier)
+          index: (identifier))
+        right: (identifier)
+        body: (statement_block))
+      (foreach_statement
+        left: (identifier)
+        left: (tuple_index
+          index: (identifier)
+          index: (identifier))
+        right: (identifier)
+        right: (tuple_index
+          index: (identifier))
+        aggregation_operator: (identifier)
+        limit: (literal (number))
+        body: (continue_statement)))))
+
+========================================================================
+Try statement with catch clause
+========================================================================
+
+probe p {
+    try {} catch (x) {}
+}
+
+---
+
+(program
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block
+      (try_statement
+        body: (statement_block)
+        handler: (catch_clause
+          parameter: (identifier)
+          body: (statement_block))))))

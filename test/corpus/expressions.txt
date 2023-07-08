@@ -1,0 +1,285 @@
+========================================================================
+Assignment expressions
+========================================================================
+
+function f() {
+    p %= q
+    p &= q
+    p *= q
+    p += q
+    p -= q
+    p .= q
+    p /= q
+    p <<= q
+    p <<< q
+    p = q
+    p >>= q
+    p ^= q
+    p |= q
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (assignment_expression
+          left: (identifier)
+          right: (identifier))))))
+
+========================================================================
+Ternary expression
+========================================================================
+
+function f() {
+    p ? q : r
+    p ? q ? r : s : t
+    p ? q : r ? s : t
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (expression_statement
+        (ternary_expression
+          condition: (identifier)
+          consequence: (identifier)
+          alternative: (identifier)))
+      (expression_statement
+        (ternary_expression
+          condition: (identifier)
+          consequence: (ternary_expression
+            condition: (identifier)
+            consequence: (identifier)
+            alternative: (identifier))
+          alternative: (identifier)))
+      (expression_statement
+        (ternary_expression
+          condition: (identifier)
+          consequence: (identifier)
+          alternative: (ternary_expression
+            condition: (identifier)
+            consequence: (identifier)
+            alternative: (identifier)))))))
+
+========================================================================
+Binary expressions
+========================================================================
+
+function f() {
+    p != q
+    p !~ q
+    p % q
+    p & q
+    p && q
+    p * q
+    p + q
+    p - q
+    p . q
+    p / q
+    p < q
+    p << q
+    p <= q
+    p == q
+    p =~ q
+    p > q
+    p >= q
+    p >> q
+    p ^ q
+    p | q
+    p || q
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier)))
+      (expression_statement
+        (binary_expression
+          left: (identifier)
+          right: (identifier))))))
+
+========================================================================
+Unary expressions
+========================================================================
+
+function f() {
+    p++; q--; ++r; --s; &t; !u; +v; -w; ~x
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (update_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (unary_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (unary_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (unary_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (unary_expression
+          argument: (identifier)))
+      (null_statement)
+      (expression_statement
+        (unary_expression
+          argument: (identifier))))))
