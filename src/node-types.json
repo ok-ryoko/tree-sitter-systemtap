@@ -128,6 +128,10 @@
             "named": true
           },
           {
+            "type": "preprocessor_macro_expansion",
+            "named": true
+          },
+          {
             "type": "tuple_index",
             "named": true
           }
@@ -150,6 +154,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       }
@@ -169,6 +177,10 @@
           },
           {
             "type": "member_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           },
           {
@@ -242,6 +254,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       }
@@ -257,6 +273,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -358,6 +378,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       }
@@ -374,22 +398,14 @@
     "fields": {
       "argument": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": ",",
-            "named": false
-          },
-          {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -463,6 +479,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       }
@@ -484,6 +504,10 @@
         {
           "type": "_expression",
           "named": true
+        },
+        {
+          "type": "preprocessor_macro_expansion",
+          "named": true
         }
       ]
     }
@@ -498,6 +522,10 @@
       "types": [
         {
           "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "preprocessor_macro_expansion",
           "named": true
         }
       ]
@@ -651,7 +679,7 @@
       },
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -693,6 +721,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "preprocessor_macro_expansion",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -705,6 +743,10 @@
       "types": [
         {
           "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "preprocessor_macro_expansion",
           "named": true
         }
       ]
@@ -730,6 +772,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -784,6 +830,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       },
@@ -793,6 +843,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -846,6 +900,71 @@
     }
   },
   {
+    "type": "preprocessor_macro_definition",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "preprocessor_tokens",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "parameter": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "preprocessor_macro_expansion",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "preprocessor_tokens",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "probe_point",
     "named": true,
     "fields": {
@@ -868,6 +987,10 @@
           {
             "type": "if",
             "named": false
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       },
@@ -895,6 +1018,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -924,6 +1051,10 @@
         "required": true,
         "types": [
           {
+            "type": "preprocessor_macro_expansion",
+            "named": true
+          },
+          {
             "type": "probe_point",
             "named": true
           }
@@ -948,6 +1079,10 @@
             "named": false
           },
           {
+            "type": "preprocessor_macro_expansion",
+            "named": true
+          },
+          {
             "type": "probe_point",
             "named": true
           }
@@ -963,6 +1098,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
+          },
           {
             "type": "probe_point",
             "named": true
@@ -998,6 +1137,10 @@
             "named": false
           },
           {
+            "type": "preprocessor_macro_expansion",
+            "named": true
+          },
+          {
             "type": "probe_point",
             "named": true
           }
@@ -1015,6 +1158,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -1042,6 +1189,10 @@
           {
             "type": ",",
             "named": false
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           },
           {
             "type": "probe_point",
@@ -1083,6 +1234,14 @@
           "named": true
         },
         {
+          "type": "preprocessor_macro_definition",
+          "named": true
+        },
+        {
+          "type": "preprocessor_macro_expansion",
+          "named": true
+        },
+        {
           "type": "probe_point_alias_epilogue",
           "named": true
         },
@@ -1115,6 +1274,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -1162,6 +1325,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       }
@@ -1188,6 +1355,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       },
@@ -1198,6 +1369,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       },
@@ -1207,6 +1382,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -1266,6 +1445,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       }
@@ -1281,6 +1464,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -1324,6 +1511,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       },
@@ -1349,7 +1540,7 @@
     "fields": {
       "name": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -1364,6 +1555,10 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       },
@@ -1373,6 +1568,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -1387,6 +1586,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "preprocessor_macro_expansion",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1409,6 +1618,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
             "named": true
           }
         ]
@@ -1441,6 +1654,14 @@
   },
   {
     "type": "%",
+    "named": false
+  },
+  {
+    "type": "%(",
+    "named": false
+  },
+  {
+    "type": "%)",
     "named": false
   },
   {
@@ -1589,6 +1810,10 @@
   },
   {
     "type": "@",
+    "named": false
+  },
+  {
+    "type": "@define",
     "named": false
   },
   {

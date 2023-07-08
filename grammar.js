@@ -48,6 +48,7 @@ module.exports = grammar({
     $._assignment_expression_lhs,
     $._component,
     $._expression,
+    $._expression_or_macro,
     $._if_clause,
     $._probe_point_seq,
     $._statement,
@@ -63,11 +64,55 @@ module.exports = grammar({
 
     _component: ($) =>
       choice(
+        $.preprocessor_macro_definition,
+        $.preprocessor_macro_expansion,
         $.probe_point_definition,
         $.probe_point_alias_prologue,
         $.probe_point_alias_epilogue,
         $.function_definition,
         $.variable_declaration
+      ),
+
+    preprocessor_macro_definition: ($) =>
+      seq(
+        "@define",
+        field("name", $.identifier),
+        optional(
+          seq(
+            "(",
+            field("parameter", seqdel(",", $.identifier)),
+            ")"
+          )
+        ),
+        token(prec(2, "%(")),
+        field("body", optional($.preprocessor_tokens)),
+        token(prec(2, "%)"))
+      ),
+
+    preprocessor_tokens: (_) =>
+      repeat1(
+        choice(
+          token(prec(2, /[^%)]|[^%][)]/)),
+          token(prec(2, /[%)]/))
+        )
+      ),
+
+    preprocessor_macro_expansion: ($) =>
+      prec.right(
+        seq(
+          "@",
+          field(
+            "name",
+            token.immediate(/[$A-Z_a-z][$0-9A-Z_a-z]*/)
+          ),
+          optional(
+            seq(
+              "(",
+              field("argument", seqdel(",", $._expression)),
+              ")"
+            )
+          )
+        )
       ),
 
     probe_point_definition: ($) =>
@@ -77,7 +122,11 @@ module.exports = grammar({
         field("body", $.statement_block)
       ),
 
-    _probe_point_seq: ($) => seqdel(",", $.probe_point),
+    _probe_point_seq: ($) =>
+      choice(
+        $.preprocessor_macro_expansion,
+        seqdel(",", $.probe_point)
+      ),
 
     probe_point: ($) =>
       prec.right(
@@ -103,7 +152,11 @@ module.exports = grammar({
       seq(
         field("pattern", /[*A-Z_a-z][*0-9A-Z_a-z]*/),
         optional(
-          seq("(", field("parameter", $._expression), ")")
+          seq(
+            "(",
+            field("parameter", $._expression_or_macro),
+            ")"
+          )
         )
       ),
 
@@ -127,7 +180,10 @@ module.exports = grammar({
     probe_point_alias_prologue: ($) =>
       seq(
         "probe",
-        field("alias", $.probe_point),
+        field(
+          "alias",
+          choice($.preprocessor_macro_expansion, $.probe_point)
+        ),
         "=",
         field("probe_point", $._probe_point_seq),
         field("body", $.statement_block),
@@ -137,7 +193,10 @@ module.exports = grammar({
     probe_point_alias_epilogue: ($) =>
       seq(
         "probe",
-        field("alias", $.probe_point),
+        field(
+          "alias",
+          choice($.preprocessor_macro_expansion, $.probe_point)
+        ),
         "+=",
         field("probe_point", $._probe_point_seq),
         field("body", $.statement_block)
@@ -147,12 +206,19 @@ module.exports = grammar({
       seq(
         optional("private"),
         "function",
-        field("name", $.identifier),
-        optional(seq(":", field("return_type", $.type))),
-        "(",
-        optional(field("parameter", seqdel(",", $.parameter))),
-        ")",
-        optional(seq(":", field("priority", $.literal))),
+        choice(
+          $.preprocessor_macro_expansion,
+          seq(
+            field("name", $.identifier),
+            optional(seq(":", field("return_type", $.type))),
+            "(",
+            optional(
+              field("parameter", seqdel(",", $.parameter))
+            ),
+            ")",
+            optional(seq(":", field("priority", $.literal)))
+          )
+        ),
         field("body", $.statement_block)
       ),
 
@@ -167,17 +233,27 @@ module.exports = grammar({
     variable_declaration: ($) =>
       seq(
         choice("private", "global", seq("private", "global")),
-        seqdel(
-          ",",
-          seq(
-            field("name", $.identifier),
-            optional(
-              choice(
-                seq("=", field("value", $._expression)),
-                seq(
-                  optional(field("wrapping_indicator", "%")),
-                  optional(
-                    seq("[", field("size", $._expression), "]")
+        choice(
+          $.preprocessor_macro_expansion,
+          seqdel(
+            ",",
+            seq(
+              field("name", $.identifier),
+              optional(
+                choice(
+                  seq(
+                    "=",
+                    field("value", $._expression_or_macro)
+                  ),
+                  seq(
+                    optional(field("wrapping_indicator", "%")),
+                    optional(
+                      seq(
+                        "[",
+                        field("size", $._expression_or_macro),
+                        "]"
+                      )
+                    )
                   )
                 )
               )
@@ -204,7 +280,7 @@ module.exports = grammar({
         $.delete_statement
       ),
 
-    expression_statement: ($) => $._expression,
+    expression_statement: ($) => $._expression_or_macro,
 
     statement_block: ($) =>
       prec.right(seq("{", repeat($._statement), "}")),
@@ -223,12 +299,21 @@ module.exports = grammar({
       ),
 
     _if_clause: ($) =>
-      seq("if", "(", field("condition", $._expression), ")"),
+      seq(
+        "if",
+        "(",
+        field("condition", $._expression_or_macro),
+        ")"
+      ),
 
     while_statement: ($) =>
       seq(
         "while",
-        seq("(", field("condition", $._expression), ")"),
+        seq(
+          "(",
+          field("condition", $._expression_or_macro),
+          ")"
+        ),
         field("body", $._statement)
       ),
 
@@ -293,7 +378,10 @@ module.exports = grammar({
 
     return_statement: ($) =>
       prec.right(
-        seq("return", field("value", optional($._expression)))
+        seq(
+          "return",
+          field("value", optional($._expression_or_macro))
+        )
       ),
 
     next_statement: (_) => prec.left("next"),
@@ -315,7 +403,10 @@ module.exports = grammar({
       ),
 
     delete_statement: ($) =>
-      prec.right(seq("delete", $._expression)),
+      prec.right(seq("delete", $._expression_or_macro)),
+
+    _expression_or_macro: ($) =>
+      choice($.preprocessor_macro_expansion, $._expression),
 
     _expression: ($) =>
       choice(
@@ -337,7 +428,10 @@ module.exports = grammar({
     subscript_expression: ($) =>
       prec(
         PREC.CALL,
-        seq(field("argument", $._expression), $.tuple_index)
+        seq(
+          field("argument", $._expression_or_macro),
+          $.tuple_index
+        )
       ),
 
     binary_expression: ($) => {
@@ -370,9 +464,9 @@ module.exports = grammar({
           return prec.left(
             precedence,
             seq(
-              field("left", $._expression),
+              field("left", $._expression_or_macro),
               field("operator", operator),
-              field("right", $._expression)
+              field("right", $._expression_or_macro)
             )
           );
         })
@@ -402,12 +496,13 @@ module.exports = grammar({
               "|="
             )
           ),
-          field("right", $._expression)
+          field("right", $._expression_or_macro)
         )
       ),
 
     _assignment_expression_lhs: ($) =>
       choice(
+        $.preprocessor_macro_expansion,
         $.identifier,
         $.subscript_expression,
         $.member_expression
@@ -418,12 +513,12 @@ module.exports = grammar({
         PREC.UNARY,
         seq(
           field("operator", choice("!", "&", "+", "-", "~")),
-          field("argument", $._expression)
+          field("argument", $._expression_or_macro)
         )
       ),
 
     update_expression: ($) => {
-      const argument = field("argument", $._expression);
+      const argument = field("argument", $._expression_or_macro);
       const operator = field("operator", choice("++", "--"));
       return prec.right(
         PREC.UNARY,
@@ -435,24 +530,31 @@ module.exports = grammar({
       prec.right(
         PREC.TERNARY,
         seq(
-          field("condition", $._expression),
+          field("condition", $._expression_or_macro),
           "?",
-          field("consequence", optional($._expression)),
+          field("consequence", optional($._expression_or_macro)),
           ":",
-          field("alternative", $._expression)
+          field("alternative", $._expression_or_macro)
         )
       ),
 
-    grouping_expression: ($) => seq("(", $._expression, ")"),
+    grouping_expression: ($) =>
+      seq("(", $._expression_or_macro, ")"),
 
     call_expression: ($) =>
       prec(
         PREC.CALL,
         seq(
           field("function", $._expression),
-          field(
-            "argument",
-            seq("(", optional(seqdel(",", $._expression)), ")")
+          seq(
+            "(",
+            optional(
+              seqdel(
+                ",",
+                field("argument", $._expression_or_macro)
+              )
+            ),
+            ")"
           )
         )
       ),
@@ -462,26 +564,32 @@ module.exports = grammar({
         prec(
           PREC.CALL,
           seq(
-            field("argument", $._expression),
+            field("argument", $._expression_or_macro),
             field("operator", "->")
           )
         ),
-        field("member", $._expression)
+        field("member", $._expression_or_macro)
       ),
 
     context_variable_expansion: ($) =>
       prec(
         PREC.CALL,
-        seq(field("argument", $._expression), choice("$", "$$"))
+        seq(
+          field("argument", $._expression_or_macro),
+          choice("$", "$$")
+        )
       ),
 
     array_in_expression: ($) =>
       prec.left(
         PREC.ARRAY_IN,
         seq(
-          field("left", choice($._expression, $.tuple_index)),
+          field(
+            "left",
+            choice($._expression_or_macro, $.tuple_index)
+          ),
           field("operator", "in"),
-          field("right", $._expression)
+          field("right", $._expression_or_macro)
         )
       ),
 
@@ -494,7 +602,10 @@ module.exports = grammar({
             ",",
             choice(
               "*",
-              seq($._expression, optional($._sorting_order))
+              seq(
+                $._expression_or_macro,
+                optional($._sorting_order)
+              )
             )
           )
         ),

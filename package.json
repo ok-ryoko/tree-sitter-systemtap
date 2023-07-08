@@ -38,7 +38,8 @@
     {
       "scope": "source.systemtap",
       "file-types": [
-        "stp"
+        "stp",
+        "stpm"
       ]
     }
   ]

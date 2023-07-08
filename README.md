@@ -17,7 +17,7 @@
 - [x] Function definitions
 - [x] Probe point definitions and aliases
 - [ ] Preprocessor conditionals
-- [ ] Preprocessor macro definitions and expansions
+- [x] Preprocessor macro definitions and expansions
 - [ ] Embedded C
 
 ## License

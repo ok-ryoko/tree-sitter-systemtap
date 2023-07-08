@@ -1,0 +1,61 @@
+========================================================================
+Preprocessor macro definition
+========================================================================
+
+/* @define p %( %) */
+@define p %( q %)
+@define p(x, i) %( (@x->q[@i]$$) /* */ %)
+
+---
+
+(program
+  (comment)
+  (preprocessor_macro_definition
+    name: (identifier)
+    body: (preprocessor_tokens))
+  (preprocessor_macro_definition
+    name: (identifier)
+    parameter: (identifier)
+    parameter: (identifier)
+    body: (preprocessor_tokens)))
+
+========================================================================
+Preprocessor macro expansion in or as a top-level construct
+========================================================================
+
+@m
+global @m(s)
+function @m(s, t) {}
+probe @m {}
+
+---
+
+(program
+  (preprocessor_macro_expansion)
+  (variable_declaration
+    (preprocessor_macro_expansion
+      argument: (identifier)))
+  (function_definition
+    (preprocessor_macro_expansion
+      argument: (identifier)
+      argument: (identifier))
+    body: (statement_block))
+  (probe_point_definition
+    probe_point: (preprocessor_macro_expansion)
+    body: (statement_block)))
+
+========================================================================
+Preprocessor macro definition and expansion inside strings
+========================================================================
+
+global s = "@string" "@define m %( string %)"
+
+---
+
+(program
+  (variable_declaration
+    name: (identifier)
+    value: (literal
+      (concatenated_string
+        (string)
+        (string)))))
