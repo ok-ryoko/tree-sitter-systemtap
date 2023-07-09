@@ -26,7 +26,7 @@ probe end {
   (comment)
   (comment)
   (variable_declaration
-    name: (identifier))
+    (identifier))
   (probe_point_definition
     probe_point: (probe_point
       component: (probe_point_component)

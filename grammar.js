@@ -54,9 +54,14 @@ module.exports = grammar({
     $._statement,
     $._sorting_order,
     $._sufficiency_mark,
+    $._variable_declarator,
   ],
 
-  supertypes: ($) => [$._expression, $._statement],
+  supertypes: ($) => [
+    $._expression,
+    $._statement,
+    $._variable_declarator,
+  ],
 
   rules: {
     program: ($) =>
@@ -231,36 +236,53 @@ module.exports = grammar({
     type: (_) => token(choice("long", "string")),
 
     variable_declaration: ($) =>
+      prec.right(
+        seq(
+          choice("private", "global", seq("private", "global")),
+          choice(
+            $.preprocessor_macro_expansion,
+            seqdel(",", $._variable_declarator)
+          ),
+          optional(";")
+        )
+      ),
+
+    _variable_declarator: ($) =>
+      choice(
+        $.preprocessor_macro_expansion,
+        $.identifier,
+        $.init_declarator,
+        $.array_declarator
+      ),
+
+    init_declarator: ($) =>
       seq(
-        choice("private", "global", seq("private", "global")),
-        choice(
-          $.preprocessor_macro_expansion,
-          seqdel(
-            ",",
-            seq(
-              field("name", $.identifier),
-              optional(
-                choice(
-                  seq(
-                    "=",
-                    field("value", $._expression_or_macro)
-                  ),
-                  seq(
-                    optional(field("wrapping_indicator", "%")),
-                    optional(
-                      seq(
-                        "[",
-                        field("size", $._expression_or_macro),
-                        "]"
-                      )
-                    )
-                  )
-                )
-              )
-            )
+        field("name", $.identifier),
+        seq(
+          "=",
+          field(
+            "value",
+            choice($.preprocessor_macro_expansion, $.literal)
           )
-        ),
-        optional(";")
+        )
+      ),
+
+    array_declarator: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional(field("wrapping_indicator", "%")),
+        seq(
+          "[",
+          field(
+            "size",
+            choice(
+              $.preprocessor_macro_expansion,
+              $.script_argument_number,
+              $.number
+            )
+          ),
+          "]"
+        )
       ),
 
     _statement: ($) =>
@@ -615,8 +637,9 @@ module.exports = grammar({
     literal: ($) =>
       choice(
         $.concatenated_string,
-        $.script_argument,
         $.string,
+        $.script_argument_string,
+        $.script_argument_number,
         $.number
       ),
 
@@ -656,8 +679,9 @@ module.exports = grammar({
         )
       ),
 
-    script_argument: (_) =>
-      token(seq(choice("$", "@"), /[1-9]/, optional(/[0-9]/))),
+    script_argument_string: (_) => token(seq(/[@][1-9][0-9]*/)),
+
+    script_argument_number: (_) => token(seq(/[$][1-9][0-9]*/)),
 
     number: (_) => {
       const oct_literal = seq("0", repeat(/[0-7]/));

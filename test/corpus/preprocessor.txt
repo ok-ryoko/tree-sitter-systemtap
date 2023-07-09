@@ -54,8 +54,9 @@ global s = "@string" "@define m %( string %)"
 
 (program
   (variable_declaration
-    name: (identifier)
-    value: (literal
-      (concatenated_string
-        (string)
-        (string)))))
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (concatenated_string
+          (string)
+          (string))))))

@@ -10,14 +10,33 @@ private global a%[65535];
 
 (program
   (variable_declaration
-    name: (identifier)
-    name: (identifier) value: (literal (number))
-    name: (identifier) value: (literal (number))
-    name: (identifier) value: (literal (number))
-    name: (identifier) value: (literal (script_argument)))
+    (identifier)
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (number)))
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (number)))
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (number)))
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (script_argument_number))))
   (variable_declaration
-    name: (identifier) value: (literal (string))
-    name: (identifier) value: (literal (script_argument)))
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (string)))
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (script_argument_string))))
   (variable_declaration
-    name: (identifier)
-    size: (literal (number))))
+    (array_declarator
+      name: (identifier)
+      size: (number))))
