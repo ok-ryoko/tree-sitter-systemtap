@@ -1,0 +1,41 @@
+========================================================================
+Embedded code as a function body
+========================================================================
+
+function f() %{%}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (embedded_code)))
+
+========================================================================
+Embedded code as a top-level component and expression
+========================================================================
+
+%{
+#include <linux/fcntl.h>
+%}
+
+probe syscall.openat {
+    if ($dfd == %{ AT_FDCWD %}) ;
+}
+
+---
+
+(program
+  (embedded_code
+    body: (embedded_tokens))
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component)
+      component: (probe_point_component))
+    body: (statement_block
+      (if_statement
+        condition: (binary_expression
+          left: (identifier)
+          right: (embedded_code
+            body: (embedded_tokens)))
+        consequence: (null_statement)))))
