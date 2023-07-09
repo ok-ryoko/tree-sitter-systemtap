@@ -1,0 +1,44 @@
+========================================================================
+Single-line comments and strings
+========================================================================
+
+global s = "#string" // comment
+global t = "//string" # comment
+
+---
+
+(program
+  (variable_declaration
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (string))))
+    (comment)
+  (variable_declaration
+    (init_declarator
+      name: (identifier)
+      value: (literal
+        (string))))
+    (comment))
+
+========================================================================
+Block comments, concatenated strings and escape sequences
+========================================================================
+
+global s = /* comment */ "string" /** comment
+comment **/ "/* \"string\" */"
+
+---
+
+(program
+  (variable_declaration
+    (init_declarator
+      name: (identifier)
+      (comment)
+      value: (literal
+        (concatenated_string
+          (string)
+          (comment)
+          (string
+            (escape_sequence)
+            (escape_sequence)))))))
