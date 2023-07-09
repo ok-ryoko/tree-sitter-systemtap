@@ -12,7 +12,7 @@
 - [x] Literals
 - [x] Comments
 - [x] Variable declarations
-- [ ] Expressions
+- [x] Expressions
 - [ ] Statements
 - [x] Function definitions
 - [x] Probe point definitions and aliases

@@ -283,3 +283,81 @@ function f() {
       (expression_statement
         (unary_expression
           argument: (identifier))))))
+
+========================================================================
+Autocast expressions
+========================================================================
+
+function f() {
+    p[i];
+    p->q; p->q->r;
+    $p$; ($p)$;
+    &p->q[i]; p[i]->q in a;
+    @cast(t, "task_struct", "kernel")->comm[0]$$
+}
+
+---
+
+(program
+  (function_definition
+    name: (identifier)
+    body: (statement_block
+      (expression_statement
+        (subscript_expression
+          argument: (identifier)
+          (tuple_index
+            index: (identifier))))
+      (null_statement)
+      (expression_statement
+        (member_expression
+          argument: (identifier)
+          member: (identifier)))
+      (null_statement)
+      (expression_statement
+        (member_expression
+          argument: (identifier)
+          member: (member_expression
+            argument: (identifier)
+            member: (identifier))))
+      (null_statement)
+      (expression_statement
+        (identifier))
+      (null_statement)
+      (expression_statement
+        (context_variable_expansion
+          argument: (grouping_expression
+            (identifier))))
+      (null_statement)
+      (expression_statement
+        (unary_expression
+          argument: (subscript_expression
+            argument: (member_expression
+              argument: (identifier)
+              member: (identifier))
+            (tuple_index
+              index: (identifier)))))
+      (null_statement)
+      (expression_statement
+        (array_in_expression
+          left: (member_expression
+            argument: (subscript_expression
+              argument: (identifier)
+              (tuple_index
+                index: (identifier)))
+            member: (identifier))
+          right: (identifier)))
+      (null_statement)
+      (expression_statement
+        (context_variable_expansion
+          argument: (subscript_expression
+            argument: (member_expression
+              argument: (preprocessor_macro_expansion
+                argument: (identifier)
+                argument: (literal
+                  (string))
+                argument: (literal
+                  (string)))
+              member: (identifier))
+            (tuple_index
+              index: (literal
+                (number)))))))))

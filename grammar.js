@@ -15,22 +15,25 @@
  * @enum {number}
  */
 const PREC = {
-  TERNARY: -2,
-  ASSIGNMENT: -1,
+  TERNARY: -3,
+  ASSIGNMENT: -2,
+  ARRAY_IN: -1,
   DEFAULT: 0,
-  ARRAY_IN: 1,
-  LOGICAL_OR: 2,
-  LOGICAL_AND: 3,
-  INCLUSIVE_OR: 4,
-  EXCLUSIVE_OR: 5,
-  BITWISE_AND: 6,
-  EQUAL: 7,
-  RELATIONAL: 8,
-  BITWISE_SHIFT: 9,
-  ADDITION: 10,
-  MULTIPLICATION: 11,
-  UNARY: 12,
+  LOGICAL_OR: 1,
+  LOGICAL_AND: 2,
+  INCLUSIVE_OR: 3,
+  EXCLUSIVE_OR: 4,
+  BITWISE_AND: 5,
+  EQUAL: 6,
+  RELATIONAL: 7,
+  BITWISE_SHIFT: 8,
+  ADDITION: 9,
+  MULTIPLICATION: 10,
+  UNARY: 11,
+  EXPANSION: 12,
   CALL: 13,
+  SUBSCRIPT: 14,
+  MEMBER: 15,
 };
 
 module.exports.PREC = PREC;
@@ -432,29 +435,84 @@ module.exports = grammar({
 
     _expression: ($) =>
       choice(
+        $.member_expression,
         $.subscript_expression,
-        $.binary_expression,
-        $.assignment_expression,
+        $.call_expression,
+        $.context_variable_expansion,
         $.unary_expression,
         $.update_expression,
+        $.binary_expression,
+        $.array_in_expression,
+        $.assignment_expression,
         $.ternary_expression,
         $.grouping_expression,
-        $.call_expression,
-        $.member_expression,
-        $.context_variable_expansion,
-        $.array_in_expression,
         $.literal,
         $.identifier
       ),
 
+    member_expression: ($) =>
+      prec.right(
+        PREC.MEMBER,
+        seq(
+          field("argument", $._expression_or_macro),
+          field("operator", "->"),
+          field("member", $._expression_or_macro)
+        )
+      ),
+
     subscript_expression: ($) =>
       prec(
-        PREC.CALL,
+        PREC.SUBSCRIPT,
         seq(
           field("argument", $._expression_or_macro),
           $.tuple_index
         )
       ),
+
+    call_expression: ($) =>
+      prec(
+        PREC.CALL,
+        seq(
+          field("function", $._expression),
+          seq(
+            "(",
+            optional(
+              seqdel(
+                ",",
+                field("argument", $._expression_or_macro)
+              )
+            ),
+            ")"
+          )
+        )
+      ),
+
+    context_variable_expansion: ($) =>
+      prec(
+        PREC.EXPANSION,
+        seq(
+          field("argument", $._expression_or_macro),
+          field("operator", choice("$", "$$"))
+        )
+      ),
+
+    unary_expression: ($) =>
+      prec.left(
+        PREC.UNARY,
+        seq(
+          field("operator", choice("!", "&", "+", "-", "~")),
+          field("argument", $._expression_or_macro)
+        )
+      ),
+
+    update_expression: ($) => {
+      const argument = field("argument", $._expression_or_macro);
+      const operator = field("operator", choice("++", "--"));
+      return prec.right(
+        PREC.UNARY,
+        choice(seq(operator, argument), seq(argument, operator))
+      );
+    },
 
     binary_expression: ($) => {
       const table = [
@@ -495,6 +553,19 @@ module.exports = grammar({
       );
     },
 
+    array_in_expression: ($) =>
+      prec.left(
+        PREC.ARRAY_IN,
+        seq(
+          field(
+            "left",
+            choice($._expression_or_macro, $.tuple_index)
+          ),
+          field("operator", "in"),
+          field("right", $._expression_or_macro)
+        )
+      ),
+
     assignment_expression: ($) =>
       prec.right(
         PREC.ASSIGNMENT,
@@ -530,24 +601,6 @@ module.exports = grammar({
         $.member_expression
       ),
 
-    unary_expression: ($) =>
-      prec.left(
-        PREC.UNARY,
-        seq(
-          field("operator", choice("!", "&", "+", "-", "~")),
-          field("argument", $._expression_or_macro)
-        )
-      ),
-
-    update_expression: ($) => {
-      const argument = field("argument", $._expression_or_macro);
-      const operator = field("operator", choice("++", "--"));
-      return prec.right(
-        PREC.UNARY,
-        choice(seq(operator, argument), seq(argument, operator))
-      );
-    },
-
     ternary_expression: ($) =>
       prec.right(
         PREC.TERNARY,
@@ -562,58 +615,6 @@ module.exports = grammar({
 
     grouping_expression: ($) =>
       seq("(", $._expression_or_macro, ")"),
-
-    call_expression: ($) =>
-      prec(
-        PREC.CALL,
-        seq(
-          field("function", $._expression),
-          seq(
-            "(",
-            optional(
-              seqdel(
-                ",",
-                field("argument", $._expression_or_macro)
-              )
-            ),
-            ")"
-          )
-        )
-      ),
-
-    member_expression: ($) =>
-      seq(
-        prec(
-          PREC.CALL,
-          seq(
-            field("argument", $._expression_or_macro),
-            field("operator", "->")
-          )
-        ),
-        field("member", $._expression_or_macro)
-      ),
-
-    context_variable_expansion: ($) =>
-      prec(
-        PREC.CALL,
-        seq(
-          field("argument", $._expression_or_macro),
-          choice("$", "$$")
-        )
-      ),
-
-    array_in_expression: ($) =>
-      prec.left(
-        PREC.ARRAY_IN,
-        seq(
-          field(
-            "left",
-            choice($._expression_or_macro, $.tuple_index)
-          ),
-          field("operator", "in"),
-          field("right", $._expression_or_macro)
-        )
-      ),
 
     tuple_index: ($) =>
       seq(
