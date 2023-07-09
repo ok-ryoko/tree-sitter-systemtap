@@ -57,8 +57,8 @@ probe p {
         (assignment_expression
           left: (subscript_expression
             argument: (identifier)
-            (tuple_index
-              index: (call_expression
+            index: (tuple_index
+              (call_expression
                 function: (identifier))))
           right: (identifier))))))
 

@@ -13,7 +13,7 @@
 - [x] Comments
 - [x] Variable declarations
 - [x] Expressions
-- [ ] Statements
+- [x] Statements
 - [x] Function definitions
 - [x] Probe point definitions and aliases
 - [ ] Preprocessor conditionals

@@ -125,12 +125,21 @@ Foreach loops with continue, delete and null statements
 ========================================================================
 
 probe end {
-    foreach (k in a) ;
-    foreach (v = k in a) {}
-    foreach (v = k in a[p, *]) continue
-    foreach ([i, j] in a[p, *]) ;
-    foreach (k = [i, j] in a) {}
-    foreach (k = [i, j] in a[p, *] @count+ limit 1024) continue
+    foreach (v+ in a) continue
+    foreach (v in a+ limit 10) ;
+
+    foreach (v- = k in a) {}
+    foreach (v = k in a@sum- limit 1000) continue
+    foreach (v = t in a[tid(), *]) ;
+
+    foreach ([p+, q] in a) ;
+    foreach ([p, q+] in a limit 1) {}
+    foreach ([t, q] in a[tid(), *]@avg+) delete a[t, q]
+
+    foreach (v- = [p, q] in a) continue
+    foreach (v = [p-, q] in a) {}
+    foreach (v = [p, q-] in a) ;
+    foreach (v = [t, q] in a[tid(), *]@count- limit $1) ;
 }
 
 ---
@@ -141,47 +150,123 @@ probe end {
       component: (probe_point_component))
     body: (statement_block
       (foreach_statement
-        left: (identifier)
-        right: (identifier)
-        body: (null_statement))
-      (foreach_statement
-        left: (identifier)
-        left: (identifier)
-        right: (identifier)
-        body: (statement_block))
-      (foreach_statement
-        left: (identifier)
-        left: (identifier)
-        right: (identifier)
-        right: (tuple_index
-          index: (identifier))
+        declarator: (foreach_declarator
+          key: (identifier))
+        array: (foreach_array
+          array: (identifier))
         body: (continue_statement))
       (foreach_statement
-        left: (tuple_index
-          index: (identifier)
-          index: (identifier))
-        right: (identifier)
-        right: (tuple_index
-          index: (identifier))
+        declarator: (foreach_declarator
+          key: (identifier))
+        array: (foreach_array
+          array: (identifier))
+        limit: (literal
+          (number))
         body: (null_statement))
       (foreach_statement
-        left: (identifier)
-        left: (tuple_index
-          index: (identifier)
-          index: (identifier))
-        right: (identifier)
+        declarator: (foreach_declarator
+          value: (identifier)
+          key: (identifier))
+        array: (foreach_array
+          array: (identifier))
         body: (statement_block))
       (foreach_statement
-        left: (identifier)
-        left: (tuple_index
-          index: (identifier)
-          index: (identifier))
-        right: (identifier)
-        right: (tuple_index
-          index: (identifier))
-        aggregation_operator: (identifier)
-        limit: (literal (number))
-        body: (continue_statement)))))
+        declarator: (foreach_declarator
+          value: (identifier)
+          key: (identifier))
+        array: (foreach_array
+          array: (identifier)
+          aggregation_operator: (identifier))
+        limit: (literal
+          (number))
+        body: (continue_statement))
+      (foreach_statement
+        declarator: (foreach_declarator
+          value: (identifier)
+          key: (identifier))
+        array: (foreach_array
+          array: (identifier)
+          index: (tuple_index
+            (call_expression
+              function: (identifier))))
+        body: (null_statement))
+      (foreach_statement
+        declarator: (foreach_declarator
+          key: (tuple_capture
+            (identifier)
+            (identifier)))
+        array: (foreach_array
+          array: (identifier))
+        body: (null_statement))
+      (foreach_statement
+        declarator: (foreach_declarator
+          key: (tuple_capture
+            (identifier)
+            (identifier)))
+        array: (foreach_array
+          array: (identifier))
+        limit: (literal
+          (number))
+        body: (statement_block))
+      (foreach_statement
+        declarator: (foreach_declarator
+          key: (tuple_capture
+            (identifier)
+            (identifier)))
+        array: (foreach_array
+          array: (identifier)
+          index: (tuple_index
+            (call_expression
+              function: (identifier)))
+          aggregation_operator: (identifier))
+        body: (delete_statement
+          (subscript_expression
+            argument: (identifier)
+            index: (tuple_index
+              (identifier)
+              (identifier)))))
+      (foreach_statement
+        declarator: (foreach_declarator
+          value: (identifier)
+          key: (tuple_capture
+            (identifier)
+            (identifier)))
+        array: (foreach_array
+          array: (identifier))
+        body: (continue_statement))
+      (foreach_statement
+        declarator: (foreach_declarator
+          value: (identifier)
+          key: (tuple_capture
+            (identifier)
+            (identifier)))
+        array: (foreach_array
+          array: (identifier))
+        body: (statement_block))
+      (foreach_statement
+        declarator: (foreach_declarator
+          value: (identifier)
+          key: (tuple_capture
+            (identifier)
+            (identifier)))
+        array: (foreach_array
+          array: (identifier))
+        body: (null_statement))
+      (foreach_statement
+        declarator: (foreach_declarator
+          value: (identifier)
+          key: (tuple_capture
+            (identifier)
+            (identifier)))
+        array: (foreach_array
+          array: (identifier)
+          index: (tuple_index
+            (call_expression
+              function: (identifier)))
+          aggregation_operator: (identifier))
+        limit: (literal
+          (script_argument_number))
+        body: (null_statement)))))
 
 ========================================================================
 Try statement with catch clause

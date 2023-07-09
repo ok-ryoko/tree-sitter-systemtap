@@ -368,40 +368,60 @@ module.exports = grammar({
       seq(
         "foreach",
         "(",
-        field(
-          "left",
-          choice(
-            seq(
-              $.identifier,
-              optional(field("sorting_order", $._sorting_order)),
-              optional(
-                seq("=", choice($.identifier, $.tuple_index))
-              )
-            ),
-            $.tuple_index
-          )
-        ),
+        field("declarator", $.foreach_declarator),
         "in",
-        field(
-          "right",
-          seq(
-            $.identifier,
-            optional($.tuple_index),
-            optional(
-              field(
-                "aggregation_operator",
-                seq("@", $.identifier)
-              )
-            ),
-            optional(field("sorting_order", $._sorting_order))
-          )
-        ),
+        field("array", $.foreach_array),
         optional(seq("limit", field("limit", $._expression))),
         ")",
         field("body", $._statement)
       ),
 
-    _sorting_order: (_) => choice("+", "-"),
+    _sorting_order: (_) =>
+      field("sorting_order", choice("+", "-")),
+
+    foreach_declarator: ($) =>
+      choice(
+        seq(
+          field("key", $.identifier),
+          optional($._sorting_order)
+        ),
+        seq(
+          field("value", $.identifier),
+          optional($._sorting_order),
+          "=",
+          field("key", $.identifier)
+        ),
+        field("key", $.tuple_capture),
+        seq(
+          field("value", $.identifier),
+          optional($._sorting_order),
+          "=",
+          field("key", $.tuple_capture)
+        )
+      ),
+
+    tuple_capture: ($) =>
+      seq(
+        "[",
+        seqdel(
+          ",",
+          seq($.identifier, optional($._sorting_order))
+        ),
+        "]"
+      ),
+
+    foreach_array: ($) =>
+      seq(
+        field("array", $.identifier),
+        optional(field("index", $.tuple_index)),
+        optional(
+          seq("@", field("aggregation_operator", $.identifier))
+        ),
+        optional($._sorting_order)
+      ),
+
+    tuple_index: ($) =>
+      seq("[", seqdel(",", choice("*", $._rvalue)), "]"),
 
     break_statement: (_) => prec.left("break"),
 
@@ -470,7 +490,10 @@ module.exports = grammar({
     subscript_expression: ($) =>
       prec(
         PREC.SUBSCRIPT,
-        seq(field("argument", $._rvalue), $.tuple_index)
+        seq(
+          field("argument", $._rvalue),
+          field("index", $.tuple_index)
+        )
       ),
 
     call_expression: ($) =>
@@ -610,22 +633,6 @@ module.exports = grammar({
       ),
 
     grouping_expression: ($) => seq("(", $._rvalue, ")"),
-
-    tuple_index: ($) =>
-      seq(
-        "[",
-        field(
-          "index",
-          seqdel(
-            ",",
-            choice(
-              "*",
-              seq($._rvalue, optional($._sorting_order))
-            )
-          )
-        ),
-        "]"
-      ),
 
     literal: ($) =>
       choice(

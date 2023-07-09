@@ -36,16 +36,18 @@ probe end {
         (assignment_expression
           left: (subscript_expression
             argument: (identifier)
-            (tuple_index
-              index: (identifier)))
+            index: (tuple_index
+              (identifier)))
           right: (literal (number))))))
   (probe_point_definition
     probe_point: (probe_point
       component: (probe_point_component))
     body: (statement_block
       (foreach_statement
-        left: (identifier)
-        right: (identifier)
+        declarator: (foreach_declarator
+          key: (identifier))
+        array: (foreach_array
+          array: (identifier))
         body: (statement_block
           (expression_statement
             (call_expression
@@ -55,8 +57,8 @@ probe end {
               argument: (preprocessor_macro_expansion
                 argument: (subscript_expression
                   argument: (identifier)
-                  (tuple_index
-                    index: (identifier))))))))
+                  index: (tuple_index
+                    (identifier))))))))
       (expression_statement
         (call_expression
           function: (identifier)

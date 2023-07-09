@@ -305,8 +305,8 @@ function f() {
       (expression_statement
         (subscript_expression
           argument: (identifier)
-          (tuple_index
-            index: (identifier))))
+          index: (tuple_index
+            (identifier))))
       (null_statement)
       (expression_statement
         (member_expression
@@ -334,16 +334,16 @@ function f() {
             argument: (member_expression
               argument: (identifier)
               member: (identifier))
-            (tuple_index
-              index: (identifier)))))
+            index: (tuple_index
+              (identifier)))))
       (null_statement)
       (expression_statement
         (array_in_expression
           left: (member_expression
             argument: (subscript_expression
               argument: (identifier)
-              (tuple_index
-                index: (identifier)))
+              index: (tuple_index
+                (identifier)))
             member: (identifier))
           right: (identifier)))
       (null_statement)
@@ -358,6 +358,6 @@ function f() {
                 argument: (literal
                   (string)))
               member: (identifier))
-            (tuple_index
-              index: (literal
+            index: (tuple_index
+              (literal
                 (number)))))))))

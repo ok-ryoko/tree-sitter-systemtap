@@ -719,19 +719,109 @@
     }
   },
   {
-    "type": "foreach_statement",
+    "type": "foreach_array",
     "named": true,
     "fields": {
       "aggregation_operator": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "@",
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "array": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "index": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "tuple_index",
+            "named": true
+          }
+        ]
+      },
+      "sorting_order": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "+",
             "named": false
           },
           {
+            "type": "-",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "foreach_declarator",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "tuple_capture",
+            "named": true
+          }
+        ]
+      },
+      "sorting_order": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "foreach_statement",
+    "named": true,
+    "fields": {
+      "array": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "foreach_array",
             "named": true
           }
         ]
@@ -746,20 +836,12 @@
           }
         ]
       },
-      "left": {
-        "multiple": true,
+      "declarator": {
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "=",
-            "named": false
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "tuple_index",
+            "type": "foreach_declarator",
             "named": true
           }
         ]
@@ -771,34 +853,6 @@
           {
             "type": "_expression",
             "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "tuple_index",
-            "named": true
-          }
-        ]
-      },
-      "sorting_order": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
           }
         ]
       }
@@ -1554,17 +1608,17 @@
             "named": true
           }
         ]
+      },
+      "index": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "tuple_index",
+            "named": true
+          }
+        ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "tuple_index",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1654,43 +1708,56 @@
     }
   },
   {
-    "type": "tuple_index",
+    "type": "tuple_capture",
     "named": true,
     "fields": {
-      "index": {
+      "sorting_order": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
-          {
-            "type": "*",
-            "named": false
-          },
           {
             "type": "+",
             "named": false
           },
           {
-            "type": ",",
-            "named": false
-          },
-          {
             "type": "-",
             "named": false
-          },
-          {
-            "type": "_expression",
-            "named": true
-          },
-          {
-            "type": "embedded_code",
-            "named": true
-          },
-          {
-            "type": "preprocessor_macro_expansion",
-            "named": true
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tuple_index",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "embedded_code",
+          "named": true
+        },
+        {
+          "type": "preprocessor_macro_expansion",
+          "named": true
+        }
+      ]
     }
   },
   {
