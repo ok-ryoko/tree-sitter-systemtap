@@ -1,0 +1,69 @@
+========================================================================
+count-syscalls-nd.stp
+========================================================================
+
+#!/usr/bin/stap
+#
+# Count syscalls and print analysis time
+
+global syscall_counts
+
+probe nd_syscall.* {
+    syscall_counts[name] <<< 1
+}
+
+probe end {
+    foreach(n in syscall_counts-) {
+        printf("%s:%d\n", n, @count(syscall_counts[n]))
+    }
+    printf("Time elapsed: %d\n", gettimeofday_ns() - @entry(gettimeofday_ns()))
+}
+
+---
+
+(program
+  (shebang_line)
+  (comment)
+  (comment)
+  (variable_declaration
+    name: (identifier))
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component)
+      component: (probe_point_component))
+    body: (statement_block
+      (expression_statement
+        (assignment_expression
+          left: (subscript_expression
+            argument: (identifier)
+            (tuple_index
+              index: (identifier)))
+          right: (literal (number))))))
+  (probe_point_definition
+    probe_point: (probe_point
+      component: (probe_point_component))
+    body: (statement_block
+      (foreach_statement
+        left: (identifier)
+        right: (identifier)
+        body: (statement_block
+          (expression_statement
+            (call_expression
+              function: (identifier)
+              argument: (literal (string (escape_sequence)))
+              argument: (identifier)
+              argument: (preprocessor_macro_expansion
+                argument: (subscript_expression
+                  argument: (identifier)
+                  (tuple_index
+                    index: (identifier))))))))
+      (expression_statement
+        (call_expression
+          function: (identifier)
+          argument: (literal (string (escape_sequence)))
+          argument: (binary_expression
+            left: (call_expression
+              function: (identifier))
+            right: (preprocessor_macro_expansion
+              argument: (call_expression
+                function: (identifier)))))))))
