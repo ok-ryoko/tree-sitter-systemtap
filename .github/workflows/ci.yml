@@ -13,9 +13,11 @@ permissions:
 
 jobs:
   main:
-    runs-on:
-      - macos-12
-      - ubuntu-22.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [macos-latest, ubuntu-latest]
 
     steps:
       - name: Checkout
