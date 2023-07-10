@@ -3689,28 +3689,12 @@
       }
     },
     "script_argument_string": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "[@][1-9][0-9]*"
-          }
-        ]
-      }
+      "type": "PATTERN",
+      "value": "[@](#|[1-9][0-9]?)"
     },
     "script_argument_number": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "[$][1-9][0-9]*"
-          }
-        ]
-      }
+      "type": "PATTERN",
+      "value": "[$](#|[1-9][0-9]?)"
     },
     "number": {
       "type": "TOKEN",

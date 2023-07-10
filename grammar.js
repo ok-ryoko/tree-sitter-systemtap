@@ -764,9 +764,9 @@ module.exports = grammar({
         )
       ),
 
-    script_argument_string: (_) => token(seq(/[@][1-9][0-9]*/)),
+    script_argument_string: (_) => /[@](#|[1-9][0-9]?)/,
 
-    script_argument_number: (_) => token(seq(/[$][1-9][0-9]*/)),
+    script_argument_number: (_) => /[$](#|[1-9][0-9]?)/,
 
     number: (_) => {
       const oct_literal = seq("0", repeat(/[0-7]/));
