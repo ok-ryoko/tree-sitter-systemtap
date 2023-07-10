@@ -3369,7 +3369,7 @@
             "name": "left",
             "content": {
               "type": "SYMBOL",
-              "name": "_assignment_expression_lhs"
+              "name": "_lvalue"
             }
           },
           {
@@ -3444,7 +3444,7 @@
         ]
       }
     },
-    "_assignment_expression_lhs": {
+    "_lvalue": {
       "type": "CHOICE",
       "members": [
         {
@@ -3894,7 +3894,7 @@
   ],
   "externals": [],
   "inline": [
-    "_assignment_expression_lhs",
+    "_lvalue",
     "_component",
     "_expression",
     "_rvalue",

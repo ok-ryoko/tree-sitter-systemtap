@@ -48,7 +48,7 @@ module.exports = grammar({
   precedences: ($) => [[$.concatenated_string, $.literal]],
 
   inline: ($) => [
-    $._assignment_expression_lhs,
+    $._lvalue,
     $._component,
     $._expression,
     $._rvalue,
@@ -673,7 +673,7 @@ module.exports = grammar({
       prec.right(
         PREC.ASSIGNMENT,
         seq(
-          field("left", $._assignment_expression_lhs),
+          field("left", $._lvalue),
           field(
             "operator",
             choice(
@@ -696,7 +696,7 @@ module.exports = grammar({
         )
       ),
 
-    _assignment_expression_lhs: ($) =>
+    _lvalue: ($) =>
       choice(
         $.preprocessor_macro_expansion,
         $.conditional_preprocessing,
