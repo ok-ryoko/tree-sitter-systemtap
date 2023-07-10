@@ -58,6 +58,20 @@
     ]
   },
   {
+    "type": "_preprocessor_expression",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "preprocessor_condition",
+        "named": true
+      },
+      {
+        "type": "preprocessor_logical_expression",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "_statement",
     "named": true,
     "subtypes": [
@@ -156,6 +170,10 @@
         "required": true,
         "types": [
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -198,6 +216,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -230,6 +252,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -249,6 +275,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -334,6 +364,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -355,6 +389,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -466,6 +504,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -492,6 +534,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -563,6 +609,50 @@
     }
   },
   {
+    "type": "conditional_preprocessing",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
+            "type": "preprocessor_tokens",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_preprocessor_expression",
+            "named": true
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
+            "type": "preprocessor_tokens",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "context_variable_expansion",
     "named": true,
     "fields": {
@@ -572,6 +662,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -618,6 +712,10 @@
           "named": true
         },
         {
+          "type": "conditional_preprocessing",
+          "named": true
+        },
+        {
           "type": "embedded_code",
           "named": true
         },
@@ -659,6 +757,10 @@
       "types": [
         {
           "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_preprocessing",
           "named": true
         },
         {
@@ -926,6 +1028,10 @@
       "required": false,
       "types": [
         {
+          "type": "conditional_preprocessing",
+          "named": true
+        },
+        {
           "type": "preprocessor_macro_expansion",
           "named": true
         }
@@ -942,6 +1048,10 @@
       "types": [
         {
           "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "conditional_preprocessing",
           "named": true
         },
         {
@@ -975,6 +1085,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -1017,6 +1131,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
           {
             "type": "embedded_code",
             "named": true
@@ -1077,6 +1195,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -1092,6 +1214,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -1153,6 +1279,76 @@
     }
   },
   {
+    "type": "preprocessor_condition",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "literal",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "preprocessor_logical_expression",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_preprocessor_expression",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "&&",
+            "named": false
+          },
+          {
+            "type": "||",
+            "named": false
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_preprocessor_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "preprocessor_macro_definition",
     "named": true,
     "fields": {
@@ -1160,6 +1356,10 @@
         "multiple": false,
         "required": false,
         "types": [
+          {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
           {
             "type": "preprocessor_tokens",
             "named": true
@@ -1238,6 +1438,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -1278,6 +1482,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -1312,6 +1520,10 @@
         "required": true,
         "types": [
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "preprocessor_macro_expansion",
             "named": true
           },
@@ -1338,6 +1550,10 @@
           {
             "type": ",",
             "named": false
+          },
+          {
+            "type": "conditional_preprocessing",
+            "named": true
           },
           {
             "type": "preprocessor_macro_expansion",
@@ -1398,6 +1614,10 @@
             "named": false
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "preprocessor_macro_expansion",
             "named": true
           },
@@ -1419,6 +1639,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -1454,6 +1678,10 @@
           {
             "type": ",",
             "named": false
+          },
+          {
+            "type": "conditional_preprocessing",
+            "named": true
           },
           {
             "type": "preprocessor_macro_expansion",
@@ -1494,6 +1722,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "conditional_preprocessing",
+          "named": true
+        },
         {
           "type": "embedded_code",
           "named": true
@@ -1543,6 +1775,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -1600,6 +1836,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -1634,6 +1874,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -1652,6 +1896,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -1667,6 +1915,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -1750,6 +2002,10 @@
           "named": true
         },
         {
+          "type": "conditional_preprocessing",
+          "named": true
+        },
+        {
           "type": "embedded_code",
           "named": true
         },
@@ -1770,6 +2026,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -1820,6 +2080,10 @@
         "types": [
           {
             "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
             "named": true
           },
           {
@@ -1886,6 +2150,10 @@
             "named": true
           },
           {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
             "type": "embedded_code",
             "named": true
           },
@@ -1934,7 +2202,15 @@
     "named": false
   },
   {
+    "type": "%:",
+    "named": false
+  },
+  {
     "type": "%=",
+    "named": false
+  },
+  {
+    "type": "%?",
     "named": false
   },
   {

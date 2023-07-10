@@ -58,10 +58,12 @@ module.exports = grammar({
     $._sorting_order,
     $._sufficiency_mark,
     $._variable_declarator,
+    $._preprocessor_expression,
   ],
 
   supertypes: ($) => [
     $._expression,
+    $._preprocessor_expression,
     $._statement,
     $._variable_declarator,
   ],
@@ -74,6 +76,7 @@ module.exports = grammar({
       choice(
         $.preprocessor_macro_definition,
         $.preprocessor_macro_expansion,
+        $.conditional_preprocessing,
         $.embedded_code,
         $.probe_point_definition,
         $.probe_point_alias_prologue,
@@ -94,15 +97,23 @@ module.exports = grammar({
           )
         ),
         token(prec(2, "%(")),
-        field("body", optional($.preprocessor_tokens)),
+        field(
+          "body",
+          optional(
+            choice(
+              $.conditional_preprocessing,
+              $.preprocessor_tokens
+            )
+          )
+        ),
         token(prec(2, "%)"))
       ),
 
     preprocessor_tokens: (_) =>
       repeat1(
         choice(
-          token(prec(2, /[^%)]|[^%][)]/)),
-          token(prec(2, /[%)]/))
+          token(prec(2, /[^%)]|[^%][)]|[%][^%(]/)),
+          token(prec(2, /[%()]/))
         )
       ),
 
@@ -122,6 +133,70 @@ module.exports = grammar({
             )
           )
         )
+      ),
+
+    conditional_preprocessing: ($) =>
+      seq(
+        token(prec(2, "%(")),
+        field("condition", $._preprocessor_expression),
+        token(prec(2, "%?")),
+        field(
+          "consequence",
+          optional(
+            choice(
+              $.conditional_preprocessing,
+              $.preprocessor_tokens
+            )
+          )
+        ),
+        optional(
+          seq(
+            token(prec(2, "%:")),
+            field(
+              "alternative",
+              optional(
+                choice(
+                  $.conditional_preprocessing,
+                  $.preprocessor_tokens
+                )
+              )
+            )
+          )
+        ),
+        token(prec(2, "%)"))
+      ),
+
+    _preprocessor_expression: ($) =>
+      choice(
+        $.preprocessor_logical_expression,
+        $.preprocessor_condition
+      ),
+
+    preprocessor_logical_expression: ($) => {
+      const table = [
+        ["&&", PREC.LOGICAL_AND],
+        ["||", PREC.LOGICAL_OR],
+      ];
+
+      return choice(
+        ...table.map(([operator, precedence]) => {
+          return prec.left(
+            precedence,
+            seq(
+              field("left", $._preprocessor_expression),
+              field("operator", operator),
+              field("right", $._preprocessor_expression)
+            )
+          );
+        })
+      );
+    },
+
+    preprocessor_condition: ($) =>
+      seq(
+        field("left", choice($.identifier, $.literal)),
+        choice("==", "<=", "<", ">", ">=", "!="),
+        field("right", $.literal)
       ),
 
     embedded_code: ($) =>
@@ -149,6 +224,7 @@ module.exports = grammar({
     _probe_point_seq: ($) =>
       choice(
         $.preprocessor_macro_expansion,
+        $.conditional_preprocessing,
         seqdel(",", $.probe_point)
       ),
 
@@ -213,7 +289,11 @@ module.exports = grammar({
         "probe",
         field(
           "alias",
-          choice($.preprocessor_macro_expansion, $.probe_point)
+          choice(
+            $.preprocessor_macro_expansion,
+            $.conditional_preprocessing,
+            $.probe_point
+          )
         ),
         "+=",
         field("probe_point", $._probe_point_seq),
@@ -226,6 +306,7 @@ module.exports = grammar({
         "function",
         choice(
           $.preprocessor_macro_expansion,
+          $.conditional_preprocessing,
           seq(
             field("name", $.identifier),
             optional(seq(":", field("return_type", $.type))),
@@ -277,6 +358,7 @@ module.exports = grammar({
             "value",
             choice(
               $.preprocessor_macro_expansion,
+              $.conditional_preprocessing,
               $.embedded_code,
               $.literal
             )
@@ -294,6 +376,7 @@ module.exports = grammar({
             "size",
             choice(
               $.preprocessor_macro_expansion,
+              $.conditional_preprocessing,
               $.embedded_code,
               $.script_argument_number,
               $.number
@@ -456,6 +539,7 @@ module.exports = grammar({
     _rvalue: ($) =>
       choice(
         $.preprocessor_macro_expansion,
+        $.conditional_preprocessing,
         $.embedded_code,
         $._expression
       ),
@@ -615,6 +699,7 @@ module.exports = grammar({
     _assignment_expression_lhs: ($) =>
       choice(
         $.preprocessor_macro_expansion,
+        $.conditional_preprocessing,
         $.identifier,
         $.subscript_expression,
         $.member_expression

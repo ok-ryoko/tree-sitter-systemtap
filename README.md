@@ -16,7 +16,7 @@
 - [x] Statements
 - [x] Function definitions
 - [x] Probe point definitions and aliases
-- [ ] Preprocessor conditionals
+- [x] Conditional preprocessing
 - [x] Preprocessor macro definitions and expansions
 - [x] Embedded C
 
@@ -26,11 +26,13 @@ tree-sitter-systemtap is free and open source software licensed under the [MIT l
 
 ## Acknowledgements
 
-tree-sitter-systemtap takes after work done by [Max Brunsfeld] for [tree-sitter’s C grammar][tree-sitter-c].
+tree-sitter-systemtap takes after work done by [Max Brunsfeld] for [tree-sitter’s C grammar][tree-sitter-c] and [Vasil Markoukin] for [tree-sitter-tlaplus].
 
 [license]: ./LICENSE.txt
 [Max Brunsfeld]: https://github.com/maxbrunsfeld
 [Ryoko]: https://github.com/ok-ryoko
 [SystemTap]: https://sourceware.org/systemtap/
 [tree-sitter-c]: https://github.com/tree-sitter/tree-sitter-c
+[tree-sitter-tlaplus]: https://github.com/tlaplus-community/tree-sitter-tlaplus
 [tree-sitter]: https://github.com/tree-sitter/tree-sitter
+[Vasil Markoukin]: https://github.com/susliko

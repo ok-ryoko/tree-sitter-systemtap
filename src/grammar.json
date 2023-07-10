@@ -39,6 +39,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "conditional_preprocessing"
+        },
+        {
+          "type": "SYMBOL",
           "name": "embedded_code"
         },
         {
@@ -146,8 +150,17 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "preprocessor_tokens"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "conditional_preprocessing"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "preprocessor_tokens"
+                  }
+                ]
               },
               {
                 "type": "BLANK"
@@ -180,7 +193,7 @@
               "value": 2,
               "content": {
                 "type": "PATTERN",
-                "value": "[^%)]|[^%][)]"
+                "value": "[^%)]|[^%][)]|[%][^%(]"
               }
             }
           },
@@ -191,7 +204,7 @@
               "value": 2,
               "content": {
                 "type": "PATTERN",
-                "value": "[%)]"
+                "value": "[%()]"
               }
             }
           }
@@ -271,6 +284,269 @@
           }
         ]
       }
+    },
+    "conditional_preprocessing": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 2,
+            "content": {
+              "type": "STRING",
+              "value": "%("
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "condition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_preprocessor_expression"
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 2,
+            "content": {
+              "type": "STRING",
+              "value": "%?"
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "consequence",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "conditional_preprocessing"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "preprocessor_tokens"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "STRING",
+                      "value": "%:"
+                    }
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "alternative",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "conditional_preprocessing"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "preprocessor_tokens"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 2,
+            "content": {
+              "type": "STRING",
+              "value": "%)"
+            }
+          }
+        }
+      ]
+    },
+    "_preprocessor_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "preprocessor_logical_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "preprocessor_condition"
+        }
+      ]
+    },
+    "preprocessor_logical_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PREC_LEFT",
+          "value": 2,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "left",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_preprocessor_expression"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "&&"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "right",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_preprocessor_expression"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "PREC_LEFT",
+          "value": 1,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "left",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_preprocessor_expression"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "||"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "right",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_preprocessor_expression"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "preprocessor_condition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "left",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "literal"
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "=="
+            },
+            {
+              "type": "STRING",
+              "value": "<="
+            },
+            {
+              "type": "STRING",
+              "value": "<"
+            },
+            {
+              "type": "STRING",
+              "value": ">"
+            },
+            {
+              "type": "STRING",
+              "value": ">="
+            },
+            {
+              "type": "STRING",
+              "value": "!="
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "right",
+          "content": {
+            "type": "SYMBOL",
+            "name": "literal"
+          }
+        }
+      ]
     },
     "embedded_code": {
       "type": "SEQ",
@@ -376,6 +652,10 @@
         {
           "type": "SYMBOL",
           "name": "preprocessor_macro_expansion"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "conditional_preprocessing"
         },
         {
           "type": "SEQ",
@@ -697,6 +977,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "conditional_preprocessing"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "probe_point"
               }
             ]
@@ -749,6 +1033,10 @@
             {
               "type": "SYMBOL",
               "name": "preprocessor_macro_expansion"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "conditional_preprocessing"
             },
             {
               "type": "SEQ",
@@ -1065,6 +1353,10 @@
                   },
                   {
                     "type": "SYMBOL",
+                    "name": "conditional_preprocessing"
+                  },
+                  {
+                    "type": "SYMBOL",
                     "name": "embedded_code"
                   },
                   {
@@ -1121,6 +1413,10 @@
                   {
                     "type": "SYMBOL",
                     "name": "preprocessor_macro_expansion"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "conditional_preprocessing"
                   },
                   {
                     "type": "SYMBOL",
@@ -1972,6 +2268,10 @@
         {
           "type": "SYMBOL",
           "name": "preprocessor_macro_expansion"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "conditional_preprocessing"
         },
         {
           "type": "SYMBOL",
@@ -3153,6 +3453,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "conditional_preprocessing"
+        },
+        {
+          "type": "SYMBOL",
           "name": "identifier"
         },
         {
@@ -3615,10 +3919,12 @@
     "_statement",
     "_sorting_order",
     "_sufficiency_mark",
-    "_variable_declarator"
+    "_variable_declarator",
+    "_preprocessor_expression"
   ],
   "supertypes": [
     "_expression",
+    "_preprocessor_expression",
     "_statement",
     "_variable_declarator"
   ]
