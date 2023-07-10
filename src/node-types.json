@@ -955,6 +955,18 @@
           {
             "type": "_expression",
             "named": true
+          },
+          {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
+            "type": "embedded_code",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
           }
         ]
       }

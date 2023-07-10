@@ -467,7 +467,7 @@ module.exports = grammar({
         field("declarator", $.foreach_declarator),
         "in",
         field("array", $.foreach_array),
-        optional(seq("limit", field("limit", $._expression))),
+        optional(seq("limit", field("limit", $._rvalue))),
         ")",
         field("body", $._statement)
       ),

@@ -1798,7 +1798,7 @@
                   "name": "limit",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_expression"
+                    "name": "_rvalue"
                   }
                 }
               ]
