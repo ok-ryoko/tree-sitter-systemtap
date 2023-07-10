@@ -938,6 +938,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "conditional_preprocessing"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "probe_point"
               }
             ]
@@ -1114,33 +1118,46 @@
                   "type": "CHOICE",
                   "members": [
                     {
-                      "type": "FIELD",
-                      "name": "parameter",
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "parameter"
-                          },
-                          {
-                            "type": "REPEAT",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": ","
-                                },
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "parameter"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "preprocessor_macro_expansion"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "conditional_preprocessing"
+                        },
+                        {
+                          "type": "FIELD",
+                          "name": "parameter",
+                          "content": {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "parameter"
+                              },
+                              {
+                                "type": "REPEAT",
+                                "content": {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "STRING",
+                                      "value": ","
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "parameter"
+                                    }
+                                  ]
                                 }
-                              ]
-                            }
+                              }
+                            ]
                           }
-                        ]
-                      }
+                        }
+                      ]
                     },
                     {
                       "type": "BLANK"
@@ -1293,6 +1310,10 @@
                 "name": "preprocessor_macro_expansion"
               },
               {
+                "type": "SYMBOL",
+                "name": "conditional_preprocessing"
+              },
+              {
                 "type": "SEQ",
                 "members": [
                   {
@@ -1340,6 +1361,10 @@
         {
           "type": "SYMBOL",
           "name": "preprocessor_macro_expansion"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "conditional_preprocessing"
         },
         {
           "type": "SYMBOL",

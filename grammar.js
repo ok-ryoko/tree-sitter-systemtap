@@ -289,7 +289,11 @@ module.exports = grammar({
         "probe",
         field(
           "alias",
-          choice($.preprocessor_macro_expansion, $.probe_point)
+          choice(
+            $.preprocessor_macro_expansion,
+            $.conditional_preprocessing,
+            $.probe_point
+          )
         ),
         "=",
         field("probe_point", $._probe_point_seq),
@@ -325,7 +329,11 @@ module.exports = grammar({
             optional(seq(":", field("return_type", $.type))),
             "(",
             optional(
-              field("parameter", seqdel(",", $.parameter))
+              choice(
+                $.preprocessor_macro_expansion,
+                $.conditional_preprocessing,
+                field("parameter", seqdel(",", $.parameter))
+              )
             ),
             ")",
             optional(seq(":", field("priority", $.literal)))
@@ -348,6 +356,7 @@ module.exports = grammar({
           choice("private", "global", seq("private", "global")),
           choice(
             $.preprocessor_macro_expansion,
+            $.conditional_preprocessing,
             seqdel(",", $._variable_declarator)
           ),
           optional(";")
@@ -357,6 +366,7 @@ module.exports = grammar({
     _variable_declarator: ($) =>
       choice(
         $.preprocessor_macro_expansion,
+        $.conditional_preprocessing,
         $.identifier,
         $.init_declarator,
         $.array_declarator
