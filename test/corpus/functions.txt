@@ -19,10 +19,12 @@ private function f:long(p1, p2:long, p3):1 {
       type: (type))
     parameter: (parameter
       name: (identifier))
-    priority: (literal (number))
+    priority: (literal
+      (number))
     body: (statement_block
       (return_statement
-        value: (literal (number))))))
+        value: (literal
+          (number))))))
 
 ========================================================================
 Function call expression and string escape sequences

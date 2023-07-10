@@ -38,7 +38,8 @@ probe end {
             argument: (identifier)
             index: (tuple_index
               (identifier)))
-          right: (literal (number))))))
+          right: (literal
+            (number))))))
   (probe_point_definition
     probe_point: (probe_point
       component: (probe_point_component))
@@ -52,7 +53,9 @@ probe end {
           (expression_statement
             (call_expression
               function: (identifier)
-              argument: (literal (string (escape_sequence)))
+              argument: (literal
+                (string
+                  (escape_sequence)))
               argument: (identifier)
               argument: (preprocessor_macro_expansion
                 argument: (subscript_expression
@@ -62,7 +65,9 @@ probe end {
       (expression_statement
         (call_expression
           function: (identifier)
-          argument: (literal (string (escape_sequence)))
+          argument: (literal
+            (string
+              (escape_sequence)))
           argument: (binary_expression
             left: (call_expression
               function: (identifier))

@@ -25,11 +25,13 @@ probe p.q(0).*.s.t("parameter").u {}
     probe_point: (probe_point
       component: (probe_point_component)
       component: (probe_point_component
-        parameter: (literal (number)))
+        parameter: (literal
+          (number)))
       component: (probe_point_component)
       component: (probe_point_component)
       component: (probe_point_component
-        parameter: (literal (string)))
+        parameter: (literal
+          (string)))
       component: (probe_point_component))
     body: (statement_block)))
 
@@ -77,12 +79,14 @@ probe p, q.r(0) if (s), t.u("parameter").*.v ?, w ! if (x) {}
     probe_point: (probe_point
       component: (probe_point_component)
       component: (probe_point_component
-        parameter: (literal (number)))
+        parameter: (literal
+          (number)))
       arming_condition: (identifier))
     probe_point: (probe_point
       component: (probe_point_component)
       component: (probe_point_component
-        parameter: (literal (string)))
+        parameter: (literal
+          (string)))
       component: (probe_point_component)
       component: (probe_point_component))
     probe_point: (probe_point

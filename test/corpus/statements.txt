@@ -1,5 +1,5 @@
 ========================================================================
-If statement
+If statement with else clause (nested)
 ========================================================================
 
 function f() {
@@ -65,13 +65,15 @@ function f() {
         initialization: (expression_statement
           (assignment_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         body: (statement_block))
       (for_statement
         condition: (expression_statement
           (binary_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         body: (continue_statement))
       (for_statement
         iteration: (expression_statement
@@ -82,17 +84,20 @@ function f() {
         initialization: (expression_statement
           (assignment_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         condition: (expression_statement
           (binary_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         body: (statement_block))
       (for_statement
         condition: (expression_statement
           (binary_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         iteration: (expression_statement
           (update_expression
             argument: (identifier)))
@@ -101,7 +106,8 @@ function f() {
         initialization: (expression_statement
           (assignment_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         iteration: (expression_statement
           (update_expression
             argument: (identifier)))
@@ -110,11 +116,13 @@ function f() {
         initialization: (expression_statement
           (assignment_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         condition: (expression_statement
           (binary_expression
             left: (identifier)
-            right: (literal (number))))
+            right: (literal
+              (number))))
         iteration: (expression_statement
           (update_expression
             argument: (identifier)))
