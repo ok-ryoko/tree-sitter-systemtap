@@ -496,17 +496,8 @@
           "type": "FIELD",
           "name": "left",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "identifier"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "literal"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "preprocessor_condition_lhs"
           }
         },
         {
@@ -545,6 +536,47 @@
             "type": "SYMBOL",
             "name": "literal"
           }
+        }
+      ]
+    },
+    "preprocessor_condition_lhs": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "literal"
+        },
+        {
+          "type": "STRING",
+          "value": "arch"
+        },
+        {
+          "type": "STRING",
+          "value": "guru_mode"
+        },
+        {
+          "type": "STRING",
+          "value": "kernel_v"
+        },
+        {
+          "type": "STRING",
+          "value": "kernel_vr"
+        },
+        {
+          "type": "STRING",
+          "value": "runtime"
+        },
+        {
+          "type": "STRING",
+          "value": "systemtap_privilege"
+        },
+        {
+          "type": "STRING",
+          "value": "systemtap_v"
+        },
+        {
+          "type": "PATTERN",
+          "value": "CONFIG_[0-9A-Z_a-z]+"
         }
       ]
     },

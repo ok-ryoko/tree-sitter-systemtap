@@ -85,8 +85,9 @@ global is_x86 = %(
 (program
   (conditional_preprocessing
     condition: (preprocessor_condition
-      left: (literal
-        (number))
+      left: (preprocessor_condition_lhs
+        (literal
+          (number)))
       right: (literal
         (number)))
     consequence: (preprocessor_tokens))
@@ -94,8 +95,9 @@ global is_x86 = %(
     name: (identifier)
     body: (conditional_preprocessing
       condition: (preprocessor_condition
-        left: (literal
-          (number))
+        left: (preprocessor_condition_lhs
+          (literal
+            (number)))
         right: (literal
           (number)))
       consequence: (preprocessor_tokens)))
@@ -106,15 +108,15 @@ global is_x86 = %(
         condition: (preprocessor_logical_expression
           left: (preprocessor_logical_expression
             left: (preprocessor_condition
-              left: (identifier)
+              left: (preprocessor_condition_lhs)
               right: (literal
                 (string)))
             right: (preprocessor_condition
-              left: (identifier)
+              left: (preprocessor_condition_lhs)
               right: (literal
                 (string))))
           right: (preprocessor_condition
-            left: (identifier)
+            left: (preprocessor_condition_lhs)
             right: (literal
               (string))))
         consequence: (preprocessor_tokens)
@@ -122,16 +124,16 @@ global is_x86 = %(
   (conditional_preprocessing
     condition: (preprocessor_logical_expression
       left: (preprocessor_condition
-        left: (identifier)
+        left: (preprocessor_condition_lhs)
         right: (literal
           (string)))
       right: (preprocessor_condition
-        left: (identifier)
+        left: (preprocessor_condition_lhs)
         right: (literal
           (string))))
     consequence: (conditional_preprocessing
       condition: (preprocessor_condition
-        left: (identifier)
+        left: (preprocessor_condition_lhs)
         right: (literal
           (string)))
       consequence: (preprocessor_tokens))))

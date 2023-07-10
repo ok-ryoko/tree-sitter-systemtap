@@ -194,9 +194,22 @@ module.exports = grammar({
 
     preprocessor_condition: ($) =>
       seq(
-        field("left", choice($.identifier, $.literal)),
+        field("left", $.preprocessor_condition_lhs),
         choice("==", "<=", "<", ">", ">=", "!="),
         field("right", $.literal)
+      ),
+
+    preprocessor_condition_lhs: ($) =>
+      choice(
+        $.literal,
+        "arch",
+        "guru_mode",
+        "kernel_v",
+        "kernel_vr",
+        "runtime",
+        "systemtap_privilege",
+        "systemtap_v",
+        /CONFIG_[0-9A-Z_a-z]+/
       ),
 
     embedded_code: ($) =>

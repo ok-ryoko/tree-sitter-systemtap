@@ -1287,11 +1287,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "literal",
+            "type": "preprocessor_condition_lhs",
             "named": true
           }
         ]
@@ -1306,6 +1302,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "preprocessor_condition_lhs",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "literal",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2386,6 +2397,10 @@
     "named": false
   },
   {
+    "type": "arch",
+    "named": false
+  },
+  {
     "type": "break",
     "named": false
   },
@@ -2426,6 +2441,10 @@
     "named": false
   },
   {
+    "type": "guru_mode",
+    "named": false
+  },
+  {
     "type": "identifier",
     "named": true
   },
@@ -2435,6 +2454,14 @@
   },
   {
     "type": "in",
+    "named": false
+  },
+  {
+    "type": "kernel_v",
+    "named": false
+  },
+  {
+    "type": "kernel_vr",
     "named": false
   },
   {
@@ -2462,6 +2489,10 @@
     "named": false
   },
   {
+    "type": "runtime",
+    "named": false
+  },
+  {
     "type": "script_argument_number",
     "named": true
   },
@@ -2472,6 +2503,14 @@
   {
     "type": "shebang_line",
     "named": true
+  },
+  {
+    "type": "systemtap_privilege",
+    "named": false
+  },
+  {
+    "type": "systemtap_v",
+    "named": false
   },
   {
     "type": "try",
