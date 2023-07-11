@@ -48,15 +48,15 @@ module.exports = grammar({
   precedences: ($) => [[$.concatenated_string, $.literal]],
 
   inline: ($) => [
-    $._lvalue,
     $._component,
     $._expression,
-    $._rvalue,
     $._if_clause,
+    $._lvalue,
+    $._preprocessor_expression,
     $._probe_point_seq,
+    $._rvalue,
     $._statement,
     $._variable_declarator,
-    $._preprocessor_expression,
   ],
 
   supertypes: ($) => [
@@ -79,8 +79,8 @@ module.exports = grammar({
         $.probe_point_definition,
         $.probe_point_alias_prologue,
         $.probe_point_alias_epilogue,
-        $.function_definition,
-        $.variable_declaration
+        $.variable_declaration,
+        $.function_definition
       ),
 
     preprocessor_macro_definition: ($) =>
@@ -317,39 +317,6 @@ module.exports = grammar({
         field("body", $.statement_block)
       ),
 
-    function_definition: ($) =>
-      seq(
-        optional("private"),
-        "function",
-        choice(
-          $.preprocessor_macro_expansion,
-          $.conditional_preprocessing,
-          seq(
-            field("name", $.identifier),
-            optional(seq(":", field("return_type", $.type))),
-            "(",
-            optional(
-              choice(
-                $.preprocessor_macro_expansion,
-                $.conditional_preprocessing,
-                field("parameter", seqdel(",", $.parameter))
-              )
-            ),
-            ")",
-            optional(seq(":", field("priority", $.literal)))
-          )
-        ),
-        field("body", choice($.embedded_code, $.statement_block))
-      ),
-
-    parameter: ($) =>
-      seq(
-        field("name", $.identifier),
-        optional(seq(":", field("type", $.type)))
-      ),
-
-    type: (_) => token(choice("long", "string")),
-
     variable_declaration: ($) =>
       prec.right(
         seq(
@@ -410,6 +377,39 @@ module.exports = grammar({
       ),
 
     wrap: (_) => "%",
+
+    function_definition: ($) =>
+      seq(
+        optional("private"),
+        "function",
+        choice(
+          $.preprocessor_macro_expansion,
+          $.conditional_preprocessing,
+          seq(
+            field("name", $.identifier),
+            optional(seq(":", field("return_type", $.type))),
+            "(",
+            optional(
+              choice(
+                $.preprocessor_macro_expansion,
+                $.conditional_preprocessing,
+                field("parameter", seqdel(",", $.parameter))
+              )
+            ),
+            ")",
+            optional(seq(":", field("priority", $.literal)))
+          )
+        ),
+        field("body", choice($.embedded_code, $.statement_block))
+      ),
+
+    parameter: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional(seq(":", field("type", $.type)))
+      ),
+
+    type: (_) => token(choice("long", "string")),
 
     _statement: ($) =>
       choice(
