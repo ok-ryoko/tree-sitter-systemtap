@@ -159,7 +159,8 @@ probe end {
     body: (statement_block
       (foreach_statement
         declarator: (foreach_declarator
-          key: (identifier))
+          key: (identifier)
+          sort_direction: (sort_direction))
         array: (foreach_array
           array: (identifier))
         body: (continue_statement))
@@ -167,13 +168,15 @@ probe end {
         declarator: (foreach_declarator
           key: (identifier))
         array: (foreach_array
-          array: (identifier))
+          array: (identifier)
+          sort_direction: (sort_direction))
         limit: (literal
           (number))
         body: (null_statement))
       (foreach_statement
         declarator: (foreach_declarator
           value: (identifier)
+          sort_direction: (sort_direction)
           key: (identifier))
         array: (foreach_array
           array: (identifier))
@@ -184,7 +187,8 @@ probe end {
           key: (identifier))
         array: (foreach_array
           array: (identifier)
-          aggregation_operator: (identifier))
+          aggregation_operator: (identifier)
+          sort_direction: (sort_direction))
         limit: (literal
           (number))
         body: (continue_statement))
@@ -202,6 +206,7 @@ probe end {
         declarator: (foreach_declarator
           key: (tuple_capture
             (identifier)
+            (sort_direction)
             (identifier)))
         array: (foreach_array
           array: (identifier))
@@ -210,7 +215,8 @@ probe end {
         declarator: (foreach_declarator
           key: (tuple_capture
             (identifier)
-            (identifier)))
+            (identifier)
+            (sort_direction)))
         array: (foreach_array
           array: (identifier))
         limit: (literal
@@ -226,7 +232,8 @@ probe end {
           index: (tuple_index
             (call_expression
               function: (identifier)))
-          aggregation_operator: (identifier))
+          aggregation_operator: (identifier)
+          sort_direction: (sort_direction))
         body: (delete_statement
           (subscript_expression
             argument: (identifier)
@@ -236,6 +243,7 @@ probe end {
       (foreach_statement
         declarator: (foreach_declarator
           value: (identifier)
+          sort_direction: (sort_direction)
           key: (tuple_capture
             (identifier)
             (identifier)))
@@ -247,6 +255,7 @@ probe end {
           value: (identifier)
           key: (tuple_capture
             (identifier)
+            (sort_direction)
             (identifier)))
         array: (foreach_array
           array: (identifier))
@@ -256,7 +265,8 @@ probe end {
           value: (identifier)
           key: (tuple_capture
             (identifier)
-            (identifier)))
+            (identifier)
+            (sort_direction)))
         array: (foreach_array
           array: (identifier))
         body: (null_statement))
@@ -271,7 +281,8 @@ probe end {
           index: (tuple_index
             (call_expression
               function: (identifier)))
-          aggregation_operator: (identifier))
+          aggregation_operator: (identifier)
+          sort_direction: (sort_direction))
         limit: (literal
           (script_argument_number))
         body: (null_statement)))))

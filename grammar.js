@@ -55,8 +55,6 @@ module.exports = grammar({
     $._if_clause,
     $._probe_point_seq,
     $._statement,
-    $._sorting_order,
-    $._sufficiency_mark,
     $._variable_declarator,
     $._preprocessor_expression,
   ],
@@ -255,7 +253,7 @@ module.exports = grammar({
             )
           ),
           optional(
-            field("sufficiency_mark", $._sufficiency_mark)
+            field("sufficiency_mark", $.sufficiency_mark)
           ),
           optional(field("arming_condition", $._if_clause))
         )
@@ -282,7 +280,7 @@ module.exports = grammar({
         )
       ),
 
-    _sufficiency_mark: (_) => choice("!", "?"),
+    sufficiency_mark: (_) => choice("!", "?"),
 
     probe_point_alias_prologue: ($) =>
       seq(
@@ -392,7 +390,7 @@ module.exports = grammar({
     array_declarator: ($) =>
       seq(
         field("name", $.identifier),
-        optional(field("wrapping_indicator", "%")),
+        optional(field("wrap", $.wrap)),
         seq(
           "[",
           field(
@@ -408,6 +406,8 @@ module.exports = grammar({
           "]"
         )
       ),
+
+    wrap: (_) => "%",
 
     _statement: ($) =>
       choice(
@@ -482,25 +482,22 @@ module.exports = grammar({
         field("body", $._statement)
       ),
 
-    _sorting_order: (_) =>
-      field("sorting_order", choice("+", "-")),
-
     foreach_declarator: ($) =>
       choice(
         seq(
           field("key", $.identifier),
-          optional($._sorting_order)
+          optional(field("sort_direction", $.sort_direction))
         ),
         seq(
           field("value", $.identifier),
-          optional($._sorting_order),
+          optional(field("sort_direction", $.sort_direction)),
           "=",
           field("key", $.identifier)
         ),
         field("key", $.tuple_capture),
         seq(
           field("value", $.identifier),
-          optional($._sorting_order),
+          optional(field("sort_direction", $.sort_direction)),
           "=",
           field("key", $.tuple_capture)
         )
@@ -511,7 +508,7 @@ module.exports = grammar({
         "[",
         seqdel(
           ",",
-          seq($.identifier, optional($._sorting_order))
+          seq($.identifier, optional($.sort_direction))
         ),
         "]"
       ),
@@ -523,8 +520,11 @@ module.exports = grammar({
         optional(
           seq("@", field("aggregation_operator", $.identifier))
         ),
-        optional($._sorting_order)
+        optional(field("sort_direction", $.sort_direction))
       ),
+
+    sort_direction: (_) =>
+      field("sort_direction", choice("+", "-")),
 
     tuple_index: ($) =>
       seq("[", seqdel(",", choice("*", $._rvalue)), "]"),

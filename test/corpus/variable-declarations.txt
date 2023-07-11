@@ -39,4 +39,5 @@ private global a%[65535];
   (variable_declaration
     (array_declarator
       name: (identifier)
+      wrap: (wrap)
       size: (number))))

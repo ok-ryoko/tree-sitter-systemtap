@@ -777,7 +777,7 @@
                 "name": "sufficiency_mark",
                 "content": {
                   "type": "SYMBOL",
-                  "name": "_sufficiency_mark"
+                  "name": "sufficiency_mark"
                 }
               },
               {
@@ -906,7 +906,7 @@
         ]
       }
     },
-    "_sufficiency_mark": {
+    "sufficiency_mark": {
       "type": "CHOICE",
       "members": [
         {
@@ -1443,10 +1443,10 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "wrapping_indicator",
+              "name": "wrap",
               "content": {
-                "type": "STRING",
-                "value": "%"
+                "type": "SYMBOL",
+                "name": "wrap"
               }
             },
             {
@@ -1497,6 +1497,10 @@
           ]
         }
       ]
+    },
+    "wrap": {
+      "type": "STRING",
+      "value": "%"
     },
     "_statement": {
       "type": "CHOICE",
@@ -1847,23 +1851,6 @@
         }
       ]
     },
-    "_sorting_order": {
-      "type": "FIELD",
-      "name": "sorting_order",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "+"
-          },
-          {
-            "type": "STRING",
-            "value": "-"
-          }
-        ]
-      }
-    },
     "foreach_declarator": {
       "type": "CHOICE",
       "members": [
@@ -1882,8 +1869,12 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "_sorting_order"
+                  "type": "FIELD",
+                  "name": "sort_direction",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "sort_direction"
+                  }
                 },
                 {
                   "type": "BLANK"
@@ -1907,8 +1898,12 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "_sorting_order"
+                  "type": "FIELD",
+                  "name": "sort_direction",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "sort_direction"
+                  }
                 },
                 {
                   "type": "BLANK"
@@ -1952,8 +1947,12 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "_sorting_order"
+                  "type": "FIELD",
+                  "name": "sort_direction",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "sort_direction"
+                  }
                 },
                 {
                   "type": "BLANK"
@@ -1998,7 +1997,7 @@
                   "members": [
                     {
                       "type": "SYMBOL",
-                      "name": "_sorting_order"
+                      "name": "sort_direction"
                     },
                     {
                       "type": "BLANK"
@@ -2028,7 +2027,7 @@
                         "members": [
                           {
                             "type": "SYMBOL",
-                            "name": "_sorting_order"
+                            "name": "sort_direction"
                           },
                           {
                             "type": "BLANK"
@@ -2104,8 +2103,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_sorting_order"
+              "type": "FIELD",
+              "name": "sort_direction",
+              "content": {
+                "type": "SYMBOL",
+                "name": "sort_direction"
+              }
             },
             {
               "type": "BLANK"
@@ -2113,6 +2116,23 @@
           ]
         }
       ]
+    },
+    "sort_direction": {
+      "type": "FIELD",
+      "name": "sort_direction",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "+"
+          },
+          {
+            "type": "STRING",
+            "value": "-"
+          }
+        ]
+      }
     },
     "tuple_index": {
       "type": "SEQ",
@@ -3958,8 +3978,6 @@
     "_if_clause",
     "_probe_point_seq",
     "_statement",
-    "_sorting_order",
-    "_sufficiency_mark",
     "_variable_declarator",
     "_preprocessor_expression"
   ],

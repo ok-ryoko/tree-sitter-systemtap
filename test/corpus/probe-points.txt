@@ -88,9 +88,11 @@ probe p, q.r(0) if (s), t.u("parameter").*.v ?, w ! if (x) {}
         parameter: (literal
           (string)))
       component: (probe_point_component)
-      component: (probe_point_component))
+      component: (probe_point_component)
+      sufficiency_mark: (sufficiency_mark))
     probe_point: (probe_point
       component: (probe_point_component)
+      sufficiency_mark: (sufficiency_mark)
       arming_condition: (identifier))
     body: (statement_block)))
 
@@ -111,7 +113,8 @@ probe p.{q, {r, s}}.t ? {}
         (probe_point_expansion
           (probe_point_component)
           (probe_point_component)))
-      component: (probe_point_component))
+      component: (probe_point_component)
+      sufficiency_mark: (sufficiency_mark))
     body: (statement_block)))
 
 ========================================================================

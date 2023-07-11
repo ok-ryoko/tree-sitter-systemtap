@@ -48,7 +48,8 @@ probe end {
         declarator: (foreach_declarator
           key: (identifier))
         array: (foreach_array
-          array: (identifier))
+          array: (identifier)
+          sort_direction: (sort_direction))
         body: (statement_block
           (expression_statement
             (call_expression

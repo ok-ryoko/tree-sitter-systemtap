@@ -195,13 +195,13 @@
           }
         ]
       },
-      "wrapping_indicator": {
+      "wrap": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "%",
-            "named": false
+            "type": "wrap",
+            "named": true
           }
         ]
       }
@@ -858,17 +858,13 @@
           }
         ]
       },
-      "sorting_order": {
+      "sort_direction": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
+            "type": "sort_direction",
+            "named": true
           }
         ]
       }
@@ -892,17 +888,13 @@
           }
         ]
       },
-      "sorting_order": {
+      "sort_direction": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
+            "type": "sort_direction",
+            "named": true
           }
         ]
       },
@@ -1527,12 +1519,8 @@
         "required": false,
         "types": [
           {
-            "type": "!",
-            "named": false
-          },
-          {
-            "type": "?",
-            "named": false
+            "type": "sufficiency_mark",
+            "named": true
           }
         ]
       }
@@ -1825,6 +1813,26 @@
     }
   },
   {
+    "type": "sort_direction",
+    "named": true,
+    "fields": {
+      "sort_direction": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "statement_block",
     "named": true,
     "fields": {},
@@ -1891,6 +1899,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "sufficiency_mark",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "ternary_expression",
@@ -1993,28 +2006,17 @@
   {
     "type": "tuple_capture",
     "named": true,
-    "fields": {
-      "sorting_order": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "+",
-            "named": false
-          },
-          {
-            "type": "-",
-            "named": false
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "sort_direction",
           "named": true
         }
       ]
@@ -2195,6 +2197,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "wrap",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "!",
