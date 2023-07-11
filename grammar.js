@@ -192,14 +192,16 @@ module.exports = grammar({
 
     preprocessor_condition: ($) =>
       seq(
-        field("left", $.preprocessor_condition_lhs),
+        field(
+          "left",
+          choice($.preprocessor_constant, $.literal)
+        ),
         choice("==", "<=", "<", ">", ">=", "!="),
         field("right", $.literal)
       ),
 
-    preprocessor_condition_lhs: ($) =>
+    preprocessor_constant: ($) =>
       choice(
-        $.literal,
         "arch",
         "guru_mode",
         "kernel_v",

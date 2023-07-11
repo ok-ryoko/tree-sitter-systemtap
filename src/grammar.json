@@ -496,8 +496,17 @@
           "type": "FIELD",
           "name": "left",
           "content": {
-            "type": "SYMBOL",
-            "name": "preprocessor_condition_lhs"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "preprocessor_constant"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "literal"
+              }
+            ]
           }
         },
         {
@@ -539,13 +548,9 @@
         }
       ]
     },
-    "preprocessor_condition_lhs": {
+    "preprocessor_constant": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "SYMBOL",
-          "name": "literal"
-        },
         {
           "type": "STRING",
           "value": "arch"
