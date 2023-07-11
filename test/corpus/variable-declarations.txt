@@ -4,7 +4,7 @@ Variable declarations
 
 global n1, n2 = 01, n3 = 1, n4 = 0x1, n5 = $1
 private s1 = "string", s2 = @2
-private global a%[65535];
+private global a1%, a2%[65535];
 
 ---
 
@@ -39,5 +39,9 @@ private global a%[65535];
   (variable_declaration
     (array_declarator
       name: (identifier)
+      wrap: (wrap))
+    (array_declarator
+      name: (identifier)
       wrap: (wrap)
-      size: (number))))
+      (array_size_specifier
+        size: (number)))))

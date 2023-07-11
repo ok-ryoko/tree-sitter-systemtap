@@ -169,32 +169,6 @@
           }
         ]
       },
-      "size": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "conditional_preprocessing",
-            "named": true
-          },
-          {
-            "type": "embedded_code",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "preprocessor_macro_expansion",
-            "named": true
-          },
-          {
-            "type": "script_argument_number",
-            "named": true
-          }
-        ]
-      },
       "wrap": {
         "multiple": false,
         "required": false,
@@ -205,6 +179,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "array_size_specifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -265,6 +249,38 @@
           },
           {
             "type": "preprocessor_macro_expansion",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "array_size_specifier",
+    "named": true,
+    "fields": {
+      "size": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "conditional_preprocessing",
+            "named": true
+          },
+          {
+            "type": "embedded_code",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "preprocessor_macro_expansion",
+            "named": true
+          },
+          {
+            "type": "script_argument_number",
             "named": true
           }
         ]

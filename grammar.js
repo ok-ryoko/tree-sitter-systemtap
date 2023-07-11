@@ -359,21 +359,27 @@ module.exports = grammar({
     array_declarator: ($) =>
       seq(
         field("name", $.identifier),
-        optional(field("wrap", $.wrap)),
-        seq(
-          "[",
-          field(
-            "size",
-            choice(
-              $.preprocessor_macro_expansion,
-              $.conditional_preprocessing,
-              $.embedded_code,
-              $.script_argument_number,
-              $.number
-            )
-          ),
-          "]"
+        choice(
+          field("wrap", $.wrap),
+          $.array_size_specifier,
+          seq(field("wrap", $.wrap), $.array_size_specifier)
         )
+      ),
+
+    array_size_specifier: ($) =>
+      seq(
+        "[",
+        field(
+          "size",
+          choice(
+            $.preprocessor_macro_expansion,
+            $.conditional_preprocessing,
+            $.embedded_code,
+            $.script_argument_number,
+            $.number
+          )
+        ),
+        "]"
       ),
 
     wrap: (_) => "%",

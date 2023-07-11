@@ -1229,51 +1229,69 @@
               }
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "array_size_specifier"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "wrap",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "wrap"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "array_size_specifier"
+                }
+              ]
             }
           ]
+        }
+      ]
+    },
+    "array_size_specifier": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "["
-            },
-            {
-              "type": "FIELD",
-              "name": "size",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "preprocessor_macro_expansion"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "conditional_preprocessing"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "embedded_code"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "script_argument_number"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "number"
-                  }
-                ]
+          "type": "FIELD",
+          "name": "size",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "preprocessor_macro_expansion"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "conditional_preprocessing"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "embedded_code"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "script_argument_number"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "number"
               }
-            },
-            {
-              "type": "STRING",
-              "value": "]"
-            }
-          ]
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "]"
         }
       ]
     },
