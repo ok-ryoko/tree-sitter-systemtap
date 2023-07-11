@@ -1,6 +1,6 @@
 # tree-sitter-systemtap
 
-[SystemTap] grammar for [tree-sitter] as interpreted by [Ryoko] from the SystemTap man pages, language reference, tapsets and test suite
+[SystemTap] grammar and queries for [tree-sitter] as interpreted by [Ryoko] from the SystemTap v4.8 man pages, language reference, tapsets and test suite
 
 ## Objectives
 
