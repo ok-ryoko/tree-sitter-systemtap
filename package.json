@@ -40,6 +40,9 @@
       "file-types": [
         "stp",
         "stpm"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
       ]
     }
   ]

@@ -33,6 +33,11 @@ pub fn language() -> Language {
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
 pub const NODE_TYPES: &'static str = include_str!("../../src/node-types.json");
 
+/// The content of the [`highlights.scm`][] file for this grammar.
+///
+/// [`highlights.scm`]: https://tree-sitter.github.io/tree-sitter/syntax-highlighting#highlights
+pub const HIGHLIGHTS_QUERY: &'static str = include_str!("../../queries/highlights.scm");
+
 #[cfg(test)]
 mod tests {
     #[test]
