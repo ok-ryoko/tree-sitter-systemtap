@@ -5,6 +5,8 @@
 ## Objectives
 
 - Enable accurate syntax highlighting in a manner consistent with the SystemTap language server
+- Help SystemTap script authors avoid parser errors
+- Provide a rich concrete syntax tree
 - Strike an intuitive balance between tree-sitter and SystemTap conventions
 
 ## Language feature checklist
