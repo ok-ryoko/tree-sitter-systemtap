@@ -200,7 +200,7 @@ module.exports = grammar({
         field("right", $.literal)
       ),
 
-    preprocessor_constant: ($) =>
+    preprocessor_constant: (_) =>
       choice(
         "arch",
         "guru_mode",
@@ -833,7 +833,7 @@ module.exports = grammar({
 
     shebang_line: (_) => /#!.*/,
 
-    comment: ($) =>
+    comment: (_) =>
       choice(
         seq(
           token(prec(1, "/*")),
