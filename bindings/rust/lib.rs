@@ -38,6 +38,11 @@ pub const NODE_TYPES: &'static str = include_str!("../../src/node-types.json");
 /// [`highlights.scm`]: https://tree-sitter.github.io/tree-sitter/syntax-highlighting#highlights
 pub const HIGHLIGHTS_QUERY: &'static str = include_str!("../../queries/highlights.scm");
 
+/// The content of the [`locals.scm`][] file for this grammar.
+///
+/// [`locals.scm`]: https://tree-sitter.github.io/tree-sitter/syntax-highlighting#local-variables
+pub const LOCALS_QUERY: &'static str = include_str!("../../queries/locals.scm");
+
 #[cfg(test)]
 mod tests {
     #[test]
