@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tree-sitter generate",
     "fmt": "prettier --write .",
-    "fmt-check": "prettier --check .",
+    "fmt-check": "prettier --check . && eslint-config-prettier grammar.js.",
     "lint": "eslint .",
     "prepare": "husky install",
     "test": "tree-sitter test"
