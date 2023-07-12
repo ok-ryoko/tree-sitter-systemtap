@@ -526,9 +526,27 @@ module.exports = grammar({
         field("array", $.identifier),
         optional(field("index", $.tuple_index)),
         optional(
-          seq("@", field("aggregation_operator", $.identifier))
+          field("aggregation_operator", $.aggregation_operator)
         ),
         optional(field("sort_direction", $.sort_direction))
+      ),
+
+    aggregation_operator: (_) =>
+      seq(
+        "@",
+        field(
+          "name",
+          token.immediate(
+            choice(
+              "avg",
+              "count",
+              "max",
+              "min",
+              "sum",
+              "variance"
+            )
+          )
+        )
       ),
 
     sort_direction: (_) =>

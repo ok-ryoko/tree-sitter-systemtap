@@ -156,6 +156,11 @@
     ]
   },
   {
+    "type": "aggregation_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "array_declarator",
     "named": true,
     "fields": {
@@ -849,7 +854,7 @@
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "aggregation_operator",
             "named": true
           }
         ]

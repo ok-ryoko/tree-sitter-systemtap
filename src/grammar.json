@@ -2101,21 +2101,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "@"
-                },
-                {
-                  "type": "FIELD",
-                  "name": "aggregation_operator",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                }
-              ]
+              "type": "FIELD",
+              "name": "aggregation_operator",
+              "content": {
+                "type": "SYMBOL",
+                "name": "aggregation_operator"
+              }
             },
             {
               "type": "BLANK"
@@ -2137,6 +2128,51 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "aggregation_operator": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "avg"
+                },
+                {
+                  "type": "STRING",
+                  "value": "count"
+                },
+                {
+                  "type": "STRING",
+                  "value": "max"
+                },
+                {
+                  "type": "STRING",
+                  "value": "min"
+                },
+                {
+                  "type": "STRING",
+                  "value": "sum"
+                },
+                {
+                  "type": "STRING",
+                  "value": "variance"
+                }
+              ]
+            }
+          }
         }
       ]
     },

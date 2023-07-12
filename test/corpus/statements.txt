@@ -187,7 +187,7 @@ probe end {
           key: (identifier))
         array: (foreach_array
           array: (identifier)
-          aggregation_operator: (identifier)
+          aggregation_operator: (aggregation_operator)
           sort_direction: (sort_direction))
         limit: (literal
           (number))
@@ -232,7 +232,7 @@ probe end {
           index: (tuple_index
             (call_expression
               function: (identifier)))
-          aggregation_operator: (identifier)
+          aggregation_operator: (aggregation_operator)
           sort_direction: (sort_direction))
         body: (delete_statement
           (subscript_expression
@@ -281,7 +281,7 @@ probe end {
           index: (tuple_index
             (call_expression
               function: (identifier)))
-          aggregation_operator: (identifier)
+          aggregation_operator: (aggregation_operator)
           sort_direction: (sort_direction))
         limit: (literal
           (script_argument_number))

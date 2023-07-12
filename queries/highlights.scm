@@ -15,6 +15,8 @@
 
 (type) @type.builtin
 
+(aggregation_operator) @function.macro
+
 (member_expression
   member: (identifier) @field)
 
